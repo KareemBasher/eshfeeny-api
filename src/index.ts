@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express, { Application, Request, Response } from 'express'
 import morgan from 'morgan'
 import * as dotenv from 'dotenv'
