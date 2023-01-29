@@ -6,7 +6,7 @@
     "test": "npx tsc && jasmine",
     "dev": "nodemon ./src/index.ts",
     "clean": "rimraf build/",
-    "build": "npm clean && npx tsc",
+    "build": "npm run clean && npx tsc",
     "start": "npm run build && nodemon build/index.js",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
     "lint": "eslint . --ext .ts"
@@ -16,11 +16,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "body-parser": "^1.20.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jasmine": "^3.10.0",
     "jasmine-spec-reporter": "^7.0.0",
     "jsonwebtoken": "^9.0.0",
+    "mongodb": "^4.13.0",
     "morgan": "^1.10.0",
     "supertest": "^6.1.6"
   },
