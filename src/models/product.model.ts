@@ -2,8 +2,10 @@ import { connectToDb, getDb } from '../database/db'
 import Product from '../types/product.type'
 import { Db, ObjectId } from 'mongodb'
 
+// Database connection variable
 let db: Db
 
+// connecting to database
 connectToDb((error) => {
   if (!error) {
     db = getDb()
@@ -12,7 +14,9 @@ connectToDb((error) => {
   }
 })
 
+// Product class
 class ProductModel {
+  // Showing all products
   async index(): Promise<Product[]> {
     try {
       const result = (await db.collection('products').find().toArray()) as unknown as Product[]
@@ -22,6 +26,7 @@ class ProductModel {
     }
   }
 
+  // Showing a single product using its ID
   async show(id: string): Promise<Product> {
     try {
       const result = (await db
@@ -33,6 +38,7 @@ class ProductModel {
     }
   }
 
+  // Adding a product
   async create(product: Product): Promise<Product> {
     try {
       const result = (await db.collection('products').insertOne(product)) as unknown as Product
@@ -42,6 +48,7 @@ class ProductModel {
     }
   }
 
+  // Updating a single product using its ID
   async update(product: Product, id: string): Promise<Product> {
     try {
       const result = (await db.collection('products').updateOne(
@@ -70,6 +77,7 @@ class ProductModel {
     }
   }
 
+  // Deleting a product Using its ID
   async delete(id: string): Promise<Product> {
     try {
       const result = (await db

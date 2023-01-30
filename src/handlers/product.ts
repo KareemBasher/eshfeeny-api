@@ -2,8 +2,10 @@ import { Application, Request, Response } from 'express'
 import ProductModel from '../models/product.model'
 import Product from '../types/product.type'
 
+// Instantiate ProductModel class
 const productModel = new ProductModel()
 
+// Showing all products
 const index = async (req: Request, res: Response) => {
   try {
     const product = await productModel.index()
@@ -14,6 +16,7 @@ const index = async (req: Request, res: Response) => {
   }
 }
 
+// Show a product using its ID
 const show = async (req: Request, res: Response) => {
   try {
     const product = await productModel.show(req.params.id as string)
@@ -24,6 +27,7 @@ const show = async (req: Request, res: Response) => {
   }
 }
 
+// Add a product
 const create = async (req: Request, res: Response) => {
   const productObj: Product = {
     nameAr: req.body.nameAr,
@@ -49,6 +53,7 @@ const create = async (req: Request, res: Response) => {
   }
 }
 
+// Updating a product using its ID
 const update = async (req: Request, res: Response) => {
   const productObj: Product = {
     nameAr: req.body.nameAr,
@@ -74,7 +79,7 @@ const update = async (req: Request, res: Response) => {
   }
 }
 
-// Deleting a product
+// Delete a product using its ID
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const product = await productModel.delete(req.params.id as string)
