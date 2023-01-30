@@ -3,7 +3,7 @@ import { ObjectId } from 'mongodb'
 type Product = {
   id?: ObjectId
   nameAr: string
-  nameEn: string
+  nameEn: string | null
   description: string
   price: number
   volume: string | null
