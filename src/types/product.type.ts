@@ -13,7 +13,7 @@ type Product = {
   sideEffects: string[]
   category: string[]
   usage: string[]
-  warning: string[]
+  warning: string[] | null
 }
 
 export default Product
