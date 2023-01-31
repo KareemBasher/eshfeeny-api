@@ -49,9 +49,9 @@ class UserModel {
   // Adding a user
   async create(user: User): Promise<User> {
     const passwordHashedUserObj = {
-      name: user.name,
+      name: user.name.toLowerCase(),
       password: hashPassowrd(user.password),
-      email: user.email
+      email: user.email.toLowerCase()
     }
     try {
       const result = (await db
@@ -70,8 +70,8 @@ class UserModel {
         { _id: new ObjectId(id) },
         {
           $set: {
-            name: user.name,
-            email: user.email,
+            name: user.name.toLowerCase(),
+            email: user.email.toLowerCase(),
             password: hashPassowrd(user.password)
           }
         }
