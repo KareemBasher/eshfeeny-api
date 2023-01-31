@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import config from './config'
 import product_routes from './handlers/product'
 import bp from 'body-parser'
+import user_routes from './handlers/user'
 
 const PORT = config.port
 // create an instance server
@@ -17,5 +18,6 @@ app.listen(PORT, () => {
 })
 
 product_routes(app)
+user_routes(app)
 
 export default app
