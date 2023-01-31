@@ -6,7 +6,7 @@ let dbConnection: Db
 export const connectToDb = async (cb: (error?: null | unknown) => void) => {
   try {
     const client = await MongoClient.connect(config.dbString as string)
-    dbConnection = client.db()
+    dbConnection = client.db('Eshfeeny')
     return cb()
   } catch (error) {
     console.log(`Could not connect to DB, ${error}`)
