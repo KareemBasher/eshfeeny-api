@@ -22,7 +22,7 @@ class ProductModel {
       const result = (await db.collection('products').find().toArray()) as unknown as Product[]
       return result
     } catch (error) {
-      throw new Error(`Unable to show product, ${error}`)
+      throw new Error(`Unable to show products, ${error}`)
     }
   }
 
