@@ -1,6 +1,6 @@
 import { connectToDb, getDb } from '../database/db'
 import User from '../types/user.type'
-import { Db } from 'mongodb'
+import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
 
@@ -33,6 +33,60 @@ class UserServices {
       return comparePassword(password, result.password)
     } catch (error) {
       throw new Error(`Could not retrieve user email ${error}`)
+    }
+  }
+
+  // Adding an address to an existing user using their ID
+  async addAddress(id: string, userAddress: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            address: userAddress
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add address for user with id ${id} ${error}`)
+    }
+  }
+
+  // Adding a phone number to an existing user using their ID
+  async addPhoneNumber(id: string, userPhoneNumber: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            phoneNumber: userPhoneNumber
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add phone number for user with id ${id} ${error}`)
+    }
+  }
+
+  // Adding an age to an existing user using their ID
+  async addAge(id: string, userAge: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            age: userAge
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add age for user with id ${id} ${error}`)
     }
   }
 }
