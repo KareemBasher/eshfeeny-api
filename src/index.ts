@@ -5,6 +5,7 @@ import product_routes from './handlers/product'
 import bp from 'body-parser'
 import user_routes from './handlers/user'
 import userServices_routes from './services/user'
+import productServices_routes from './services/product'
 
 const PORT = config.port
 // create an instance server
@@ -19,6 +20,7 @@ app.listen(PORT, () => {
 })
 
 product_routes(app)
+productServices_routes(app)
 user_routes(app)
 userServices_routes(app)
 
