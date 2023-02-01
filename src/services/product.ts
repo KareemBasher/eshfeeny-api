@@ -15,9 +15,21 @@ const getCategory = async (req: Request, res: Response) => {
   }
 }
 
+// Searching for products
+const search = async (req: Request, res: Response) => {
+  try {
+    const product = await productServicesModel.search(req.params.query as string)
+    res.json(product)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
+  app.get('/products/search/:query', search)
 }
 
 export default productServices_routes

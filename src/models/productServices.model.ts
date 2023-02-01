@@ -17,15 +17,61 @@ connectToDb((error) => {
 // Product servicecs class
 class ProductServicesModel {
   // Show all products from a certain category
-  async getCategory(category: string): Promise<Product> {
+  async getCategory(category: string): Promise<Product[]> {
     try {
       const result = (await db
         .collection('products')
         .find({ category: category })
-        .toArray()) as unknown as Product
+        .toArray()) as unknown as Product[]
       return result
     } catch (error) {
       throw new Error(`Unable to find products from category ${category}, ${error}`)
+    }
+  }
+
+  // Search for products using the name in Arabic or English, description, and the use cases
+  async search(query: string): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .aggregate([
+          {
+            $search: {
+              compound: {
+                should: [
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: 'nameEn'
+                    }
+                  },
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: 'description'
+                    }
+                  },
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: 'nameAr'
+                    }
+                  },
+                  {
+                    autocomplete: {
+                      query: query,
+                      path: 'useCases'
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ])
+        .toArray()) as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products containing ${query}, ${error}`)
     }
   }
 }
