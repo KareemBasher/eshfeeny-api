@@ -16,7 +16,7 @@ app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
 app.listen(PORT, () => {
-  console.log(`Server is starting at port:${PORT}`)
+  console.log(`Server is running on port: ${PORT}`)
 })
 
 product_routes(app)
