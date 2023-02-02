@@ -39,6 +39,7 @@ const create = async (req: Request, res: Response) => {
     useCases: req.body.useCases,
     activeIngredient: req.body.activeIngredient,
     sideEffects: req.body.sideEffects,
+    type: req.body.type,
     category: req.body.category,
     usage: req.body.usage,
     warning: req.body.warning
@@ -65,6 +66,7 @@ const update = async (req: Request, res: Response) => {
     useCases: req.body.useCases,
     activeIngredient: req.body.activeIngredient,
     sideEffects: req.body.sideEffects,
+    type: req.body.type,
     category: req.body.category,
     usage: req.body.usage,
     warning: req.body.warning

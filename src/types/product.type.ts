@@ -11,6 +11,7 @@ type Product = {
   useCases: string[]
   activeIngredient: string[] | null
   sideEffects: string[]
+  type: string[] | null
   category: string[]
   usage: string[]
   warning: string[] | null

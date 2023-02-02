@@ -64,6 +64,7 @@ class ProductModel {
             useCases: product.useCases,
             activeIngredient: product.activeIngredient,
             sideEffects: product.sideEffects,
+            type: product.type,
             category: product.category,
             usage: product.usage,
             warning: product.warning
