@@ -1,5 +1,6 @@
 import { connectToDb, getDb } from '../database/db'
 import User from '../types/user.type'
+import OrderHistory from '../types/order.type'
 import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
@@ -87,6 +88,24 @@ class UserServices {
       return result
     } catch (error) {
       throw new Error(`Could not add age for user with id ${id} ${error}`)
+    }
+  }
+
+  // Adding an gender to an existing user using their ID
+  async addGender(id: string, userGender: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            gender: userGender.toLowerCase()
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add gender for user with id ${id} ${error}`)
     }
   }
 }
