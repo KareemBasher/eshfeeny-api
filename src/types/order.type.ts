@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 
 interface OrderProduct {
-  id: ObjectId
+  _id: ObjectId
   quantity: number
 }
 
