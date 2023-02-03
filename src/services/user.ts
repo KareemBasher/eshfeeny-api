@@ -129,9 +129,9 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/age', addAge)
   app.patch('/users/:id/gender', addGender)
   app.patch('/users/:id/orderHistory', addOrderHistory)
-  app.delete('/user/:id/orderHistory/:orderHistoryId', removeOrderHistory)
+  app.delete('/users/:id/orderHistory/:orderHistoryId', removeOrderHistory)
   app.patch('/users/:id/favorites', addFavoriteProduct)
-  app.delete('/user/:id/favorites/:productId', removeFavoriteProduct)
+  app.delete('/users/:id/favorites/:productId', removeFavoriteProduct)
 }
 
 export default userServices_routes
