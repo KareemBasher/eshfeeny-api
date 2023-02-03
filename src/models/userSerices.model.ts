@@ -112,6 +112,7 @@ class UserServices {
   // Updating order history for a user using their ID
   async updateOrderHistory(id: string, userOrder: OrderHistory): Promise<User> {
     try {
+      userOrder.products.forEach((product) => (product._id = new ObjectId(product._id)))
       const result = (await db.collection('users').updateOne(
         { _id: new ObjectId(id) },
         {
