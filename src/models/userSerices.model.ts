@@ -108,6 +108,44 @@ class UserServices {
       throw new Error(`Could not add gender for user with id ${id} ${error}`)
     }
   }
+
+  // Updating order history for a user using their ID
+  async updateOrderHistory(id: string, userOrder: OrderHistory): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            orderHistory: userOrder
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+    }
+  }
+
+  // Removing order history item for a user using their ID
+  async removeOrderHistory(id: string, orderHistoryId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            orderHistory: {
+              _id: new ObjectId(orderHistoryId)
+            }
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices

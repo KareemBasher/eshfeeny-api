@@ -63,6 +63,36 @@ const addGender = async (req: Request, res: Response) => {
   }
 }
 
+// Updating order history for a user using their ID
+const addOrderHistory = async (req: Request, res: Response) => {
+  const orderHistory = {
+    _id: new ObjectId(),
+    products: req.body.products,
+    total: req.body.total
+  }
+  try {
+    const result = await userServicesModel.updateOrderHistory(req.params.id as string, orderHistory)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// removing order history for a user using their ID
+const removeOrderHistory = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.removeOrderHistory(
+      req.params.id as string,
+      req.params.orderHistoryId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // userServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -70,6 +100,8 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/phone', addPhoneNumber)
   app.patch('/users/:id/age', addAge)
   app.patch('/users/:id/gender', addGender)
+  app.patch('/users/:id/orderHistory', addOrderHistory)
+  app.delete('/user/:id/orderHistory/:orderHistoryId', removeOrderHistory)
 }
 
 export default userServices_routes
