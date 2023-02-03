@@ -1,5 +1,6 @@
 import { Application, Request, Response } from 'express'
 import UserServicesModel from '../models/userSerices.model'
+import { ObjectId } from 'mongodb'
 
 // Instantiate UserModel class
 const userServicesModel = new UserServicesModel()
@@ -51,12 +52,24 @@ const addAge = async (req: Request, res: Response) => {
   }
 }
 
+// Adding an gebder for a user
+const addGender = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.addGender(req.params.id as string, req.body.gender)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // userServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
   app.patch('/users/:id/address', addAddress)
   app.patch('/users/:id/phone', addPhoneNumber)
   app.patch('/users/:id/age', addAge)
+  app.patch('/users/:id/gender', addGender)
 }
 
 export default userServices_routes
