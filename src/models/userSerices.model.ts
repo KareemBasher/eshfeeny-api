@@ -146,6 +146,42 @@ class UserServices {
       throw new Error(`Could not add gender for user with id ${id} ${error}`)
     }
   }
+
+  // Updating favorite products for a user using their ID
+  async updateFavorites(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            favorites: new ObjectId(productId)
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+    }
+  }
+
+  // Removing favorite product for a user using their ID
+  async removeFavorites(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            favorites: new ObjectId(productId)
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices

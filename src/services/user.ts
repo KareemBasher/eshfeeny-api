@@ -93,6 +93,34 @@ const removeOrderHistory = async (req: Request, res: Response) => {
   }
 }
 
+// Updating order history for a user using their ID
+const addFavoriteProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.updateFavorites(
+      req.params.id as string,
+      req.body.productId
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// removing order history for a user using their ID
+const removeFavoriteProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.removeFavorites(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // userServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -102,6 +130,8 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/gender', addGender)
   app.patch('/users/:id/orderHistory', addOrderHistory)
   app.delete('/user/:id/orderHistory/:orderHistoryId', removeOrderHistory)
+  app.patch('/users/:id/favorites', addFavoriteProduct)
+  app.delete('/user/:id/favorites/:productId', removeFavoriteProduct)
 }
 
 export default userServices_routes
