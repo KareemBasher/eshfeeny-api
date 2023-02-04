@@ -4,7 +4,6 @@ import OrderHistory from '../types/order.type'
 import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
-import Product from '../types/product.type'
 
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const comparePassword = (password: string, hashed: string) => {
@@ -107,6 +106,21 @@ class UserServices {
       return result
     } catch (error) {
       throw new Error(`Could not add gender for user with id ${id} ${error}`)
+    }
+  }
+
+  // Getting all previous orders from a user
+  async getOrderHistory(id: string): Promise<OrderHistory[]> {
+    try {
+      const result = (await db
+        .collection('users')
+        .find({ _id: new ObjectId(id) })
+        .project({ orderHistory: 1 })
+        .toArray()) as unknown as OrderHistory[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get order history for user with id ${id} ${error}`)
     }
   }
 

@@ -63,6 +63,17 @@ const addGender = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all previous orders from a user
+const getOrderHistory = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getOrderHistory(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Updating order history for a user using their ID
 const addOrderHistory = async (req: Request, res: Response) => {
   const orderHistory = {
@@ -128,6 +139,7 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/phone', addPhoneNumber)
   app.patch('/users/:id/age', addAge)
   app.patch('/users/:id/gender', addGender)
+  app.get('/users/:id/orderHistory', getOrderHistory)
   app.patch('/users/:id/orderHistory', addOrderHistory)
   app.delete('/users/:id/orderHistory/:orderHistoryId', removeOrderHistory)
   app.patch('/users/:id/favorites', addFavoriteProduct)
