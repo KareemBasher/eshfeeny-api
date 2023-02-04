@@ -4,6 +4,7 @@ import OrderHistory from '../types/order.type'
 import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
+import Product from '../types/product.type'
 
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const comparePassword = (password: string, hashed: string) => {
@@ -124,7 +125,7 @@ class UserServices {
 
       return result
     } catch (error) {
-      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+      throw new Error(`Could not update order history for user with id ${id} ${error}`)
     }
   }
 
@@ -144,7 +145,7 @@ class UserServices {
 
       return result
     } catch (error) {
-      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+      throw new Error(`Could not remove order from history for user with id ${id} ${error}`)
     }
   }
 
@@ -162,7 +163,7 @@ class UserServices {
 
       return result
     } catch (error) {
-      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+      throw new Error(`Could not update favorite products for user with id ${id} ${error}`)
     }
   }
 
@@ -180,7 +181,7 @@ class UserServices {
 
       return result
     } catch (error) {
-      throw new Error(`Could not add gender for user with id ${id} ${error}`)
+      throw new Error(`Could not remove favorite product for user with id ${id} ${error}`)
     }
   }
 }
