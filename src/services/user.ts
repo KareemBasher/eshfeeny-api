@@ -79,7 +79,7 @@ const addOrderHistory = async (req: Request, res: Response) => {
   }
 }
 
-// removing order history for a user using their ID
+// Removing order history for a user using their ID
 const removeOrderHistory = async (req: Request, res: Response) => {
   try {
     const result = await userServicesModel.removeOrderHistory(
@@ -107,7 +107,7 @@ const addFavoriteProduct = async (req: Request, res: Response) => {
   }
 }
 
-// removing order history for a user using their ID
+// Removing order history for a user using their ID
 const removeFavoriteProduct = async (req: Request, res: Response) => {
   try {
     const result = await userServicesModel.removeFavorites(
@@ -121,7 +121,7 @@ const removeFavoriteProduct = async (req: Request, res: Response) => {
   }
 }
 
-// userServices routes
+// UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
   app.patch('/users/:id/address', addAddress)
