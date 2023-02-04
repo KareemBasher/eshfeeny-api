@@ -1,6 +1,8 @@
 import { connectToDb, getDb } from '../database/db'
 import Product from '../types/product.type'
-import { Db } from 'mongodb'
+import { Db, ObjectId } from 'mongodb'
+import User from '../types/user.type'
+import OrderHistory from '../types/order.type'
 
 // Database connection variable
 let db: Db
@@ -72,6 +74,31 @@ class ProductServicesModel {
       return result
     } catch (error) {
       throw new Error(`Unable to find products containing ${query}, ${error}`)
+    }
+  }
+
+  // Get all products in users order history
+  async getOrderHistoryProducts(userId: string, orderHistoryId: string): Promise<ObjectId[]> {
+    // Getting all product IDs from user collection
+    const productIds: ObjectId[] = []
+
+    try {
+      const result = (await db
+        .collection('users')
+        .findOne({ _id: new ObjectId(userId) })) as unknown as User
+
+      const order = result.orderHistory?.filter((order) =>
+        order._id.equals(new ObjectId(orderHistoryId))
+      )[0] as unknown as OrderHistory
+
+      order.products.forEach((product) => productIds.push(product._id))
+
+      return productIds
+    } catch (error) {
+      console.log(error)
+      throw new Error(
+        `Unable to find products from order history array for user ${userId}, ${error}`
+      )
     }
   }
 }

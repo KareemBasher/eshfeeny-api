@@ -26,10 +26,25 @@ const search = async (req: Request, res: Response) => {
   }
 }
 
+// get all products from an order history for a user
+const getOrderHistoryProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getOrderHistoryProducts(
+      req.params.userId as string,
+      req.params.orderHistoryId
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
   app.get('/products/search/:query', search)
+  app.get('/products/user/:userId/orderHistory/:orderHistoryId', getOrderHistoryProducts)
 }
 
 export default productServices_routes
