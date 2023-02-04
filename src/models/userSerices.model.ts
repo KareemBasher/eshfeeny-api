@@ -163,6 +163,21 @@ class UserServices {
     }
   }
 
+  // Getting all favorite products from a user
+  async getFavorites(id: string): Promise<User[]> {
+    try {
+      const result = (await db
+        .collection('users')
+        .find({ _id: new ObjectId(id) })
+        .project({ favorites: 1 })
+        .toArray()) as unknown as User[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get favorite products for user with id ${id} ${error}`)
+    }
+  }
+
   // Updating favorite products for a user using their ID
   async updateFavorites(id: string, productId: string): Promise<User> {
     try {

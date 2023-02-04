@@ -104,6 +104,17 @@ const removeOrderHistory = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all favorites from a user
+const getFavorites = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getFavorites(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Updating order history for a user using their ID
 const addFavoriteProduct = async (req: Request, res: Response) => {
   try {
@@ -142,6 +153,7 @@ const userServices_routes = (app: Application) => {
   app.get('/users/:id/orderHistory', getOrderHistory)
   app.patch('/users/:id/orderHistory', addOrderHistory)
   app.delete('/users/:id/orderHistory/:orderHistoryId', removeOrderHistory)
+  app.get('/users/:id/favorites', getFavorites)
   app.patch('/users/:id/favorites', addFavoriteProduct)
   app.delete('/users/:id/favorites/:productId', removeFavoriteProduct)
 }
