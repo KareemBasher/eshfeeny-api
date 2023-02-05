@@ -101,6 +101,29 @@ class ProductServicesModel {
       )
     }
   }
+
+  // Get all favorite products for a user using their IDs
+  async getFavoriteProducts(userId: string): Promise<Product[]> {
+    // Getting all favorite products IDs
+    let user: User
+    try {
+      user = (await db
+        .collection('users')
+        .findOne({ _id: new ObjectId(userId) })) as unknown as User
+    } catch (error) {
+      throw new Error(`Unable to find product ids from favorites for user ${userId}, ${error}`)
+    }
+
+    try {
+      console.log(user?.favorites)
+      const result = (
+        await db.collection('products').find({ _id: { $in: user?.favorites } })
+      ).toArray() as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from favorites for user ${userId}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel
