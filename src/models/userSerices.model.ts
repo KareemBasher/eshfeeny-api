@@ -24,14 +24,15 @@ connectToDb((error) => {
 
 class UserServices {
   // Verifying the user email and password by comparing them to the ones in the database
-  async verifyLogin(password: string, userEmail: string): Promise<boolean | User> {
+  async verifyLogin(password: string, userEmail: string): Promise<User | boolean> {
     try {
       const result = (await db
         .collection('users')
         .findOne({ email: userEmail.toLowerCase() })) as unknown as User
 
       if (!result) return false
-      return comparePassword(password, result.password)
+      if (comparePassword(password, result.password)) return result
+      return false
     } catch (error) {
       throw new Error(`Could not retrieve user email ${error}`)
     }
