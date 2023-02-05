@@ -143,6 +143,17 @@ const removeFavoriteProduct = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all search history items for a user using their ID
+const getSearchHistory = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getSearchHistory(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -156,6 +167,7 @@ const userServices_routes = (app: Application) => {
   app.get('/users/:id/favorites', getFavorites)
   app.patch('/users/:id/favorites', addFavoriteProduct)
   app.delete('/users/:id/favorites/:productId', removeFavoriteProduct)
+  app.get('/users/:id/searchHistory', getSearchHistory)
 }
 
 export default userServices_routes
