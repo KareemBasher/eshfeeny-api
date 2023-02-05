@@ -228,6 +228,24 @@ class UserServices {
       throw new Error(`Could not search history for user with id ${id} ${error}`)
     }
   }
+
+  // Updating search history for a user
+  async updateSearchHistory(id: string, query: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            searchHistory: query
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update search history for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices
