@@ -39,7 +39,7 @@ npm start
 | PATCH | `/users/:id/orderHistory`  | Add order history | `products` (array of objects eg. [{_id: product id, quantity: product quantity}]), `total` | user ID |
 | PATCH | `/users/:id/favorites`  | Add a favorite product | `productId` | user ID |
 | PATCH | `/users/:id/searchHistory`  | Add a search history query | `query` | user ID |
-| DELETE | `/users/:id/orderHistory/:orderHistoryId`  | Remove an order history item | none | user ID, orderHistoryId |
+| DELETE | `/users/:id/orderHistory/:orderHistoryId`  | Remove an order history item | none | user ID, order history ID |
 | DELETE | `/users/:id/favorites/:productId`  | Remove a favorite product | none | user ID, product ID |
 | DELETE | `/users/:id/searchHistory/:query`  | Remove a search history item | none | user ID, query |
 
