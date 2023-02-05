@@ -246,6 +246,24 @@ class UserServices {
       throw new Error(`Could not update search history for user with id ${id} ${error}`)
     }
   }
+
+  // Removing search history item for a user using their ID
+  async removeSearchHistory(id: string, query: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            searchHistory: query
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove search history item for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices
