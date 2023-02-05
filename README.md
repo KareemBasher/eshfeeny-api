@@ -25,6 +25,7 @@ npm start
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/users/` | List all users | none | none |
 | GET | `/users/:id`  | Get a specific user | none | user ID |
+| POST | `/users/`  | Add a user | `name`, `password`, `email` | none |
 
 ## Requirements
 
