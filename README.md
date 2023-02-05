@@ -30,6 +30,18 @@ npm start
 | DELETE | `/users/:id`  | Remove a user | none | user ID |
 | POST | `/users/verify`  | Verify a user for login | `password`, `email` | none |
 | PATCH | `/users/:id/address`  | Add an address for a user | `address` | user ID |
+| PATCH | `/users/:id/phone`  | Add a phone number for a user | `phoneNumber` | user ID |
+| PATCH | `/users/:id/age`  | Add an age for a user | `age` | user ID |
+| PATCH | `/users/:id/gender`  | Add a gender for a user | `gender` | user ID |
+| GET | `/users/:id/orderHistory`  | Get user's order history | none | user ID |
+| GET | `/users/:id/favorites`  | Get user's favorite products | none | user ID |
+| GET | `/users/:id/searchHistory`  | Get user's search history | none | user ID |
+| PATCH | `/users/:id/orderHistory`  | Add order history | `products` (array of objects eg. [{_id: product id, quantity: product quantity}]), `total` | user ID |
+| PATCH | `/users/:id/favorites`  | Add a favorite product | `productId` | user ID |
+| PATCH | `/users/:id/searchHistory`  | Add a search history query | `query` | user ID |
+| DELETE | `/users/:id/orderHistory/:orderHistoryId`  | Remove an order history item | none | user ID, orderHistoryId |
+| DELETE | `/users/:id/favorites/:productId`  | Remove a favorite product | none | user ID, product ID |
+| DELETE | `/users/:id/searchHistory/:query`  | Remove a search history item | none | user ID, query |
 
 ## Requirements
 
