@@ -26,6 +26,10 @@ npm start
 | GET  | `/users/` | List all users | none | none |
 | GET | `/users/:id`  | Get a specific user | none | user ID |
 | POST | `/users/`  | Add a user | `name`, `password`, `email` | none |
+| PATCH | `/users/:id`  | Edit a user | `name`, `password`, `email` | user ID |
+| DELETE | `/users/:id`  | Remove a user | none | user ID |
+| POST | `/users/verify`  | Verify a user for login | `password`, `email` | none |
+| PATCH | `/users/:id/address`  | Add an address for a user | `address` | user ID |
 
 ## Requirements
 
@@ -34,3 +38,5 @@ a `.env` file that includes:
 
 * `PORT` the port that the server listens to.
 * `MONGODB_STRING` the MongoDB connection URI.
+* `BCRYPT_SECRET` pepper for bcrypt used in password encryption.
+* `SALT` salt rounds for bcrypt used in password encryption.
