@@ -13,6 +13,7 @@ npm install
 ## Usage
 
 To start the server, run:
+
 ```bash
 npm start
 > Server is running on port: <PORT>
@@ -20,7 +21,8 @@ npm start
 
 ## Routes
 
-#### User Routes
+### User Routes
+
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/users/` | List all users | none | none |
