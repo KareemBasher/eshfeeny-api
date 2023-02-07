@@ -5,6 +5,19 @@ import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
 
+// Interface for user alarms
+interface Alarm {
+  _id?: ObjectId
+  name: string
+  notes?: string | null
+  dose: number | null
+  alarmTime: string[] | number[] | null
+  repetition: string
+  startDate?: string | null
+  endDate?: string | null
+  days?: string | null
+}
+
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const comparePassword = (password: string, hashed: string) => {
   return bcrypt.compareSync(password + config.secret, hashed)
@@ -274,6 +287,24 @@ class UserServices {
       return result?.alarms
     } catch (error) {
       throw new Error(`Could not get alarms for user with id ${id} ${error}`)
+    }
+  }
+
+  // Adding an alarm for a user
+  async addAlarm(id: string, alarm: Alarm): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            alarms: alarm
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add alarm for user with id ${id} ${error}`)
     }
   }
 }

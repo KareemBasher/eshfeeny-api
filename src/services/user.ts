@@ -2,6 +2,19 @@ import { Application, Request, Response } from 'express'
 import UserServicesModel from '../models/userSerices.model'
 import { ObjectId } from 'mongodb'
 
+// Interface for user alarms
+interface Alarm {
+  _id?: ObjectId
+  name: string
+  notes?: string | null
+  dose: number | null
+  alarmTime: string[] | number[] | null
+  repetition: string
+  startDate?: string | null
+  endDate?: string | null
+  days?: string | null
+}
+
 // Instantiate UserModel class
 const userServicesModel = new UserServicesModel()
 
@@ -193,6 +206,28 @@ const getAlarms = async (req: Request, res: Response) => {
   }
 }
 
+// Adding an alarm for a user
+const addAlarm = async (req: Request, res: Response) => {
+  const alarmObject: Alarm = {
+    _id: new ObjectId(),
+    name: req.body.name,
+    notes: req.body.notes,
+    dose: req.body.dose,
+    repetition: req.body.repetition.toLowerCase(),
+    alarmTime: req.body.alarmTime,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
+    days: req.body.days
+  }
+  try {
+    const result = await userServicesModel.addAlarm(req.params.id as string, alarmObject)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -210,6 +245,7 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/searchHistory', updateSearchHistory)
   app.delete('/users/:id/searchHistory/:query', removeSearchHistory)
   app.get('/users/:id/alarms', getAlarms)
+  app.patch('/users/:id/alarms', addAlarm)
 }
 
 export default userServices_routes
