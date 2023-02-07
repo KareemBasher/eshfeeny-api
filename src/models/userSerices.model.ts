@@ -322,7 +322,27 @@ class UserServices {
 
       return result
     } catch (error) {
-      throw new Error(`Could not add alarm for user with id ${id} ${error}`)
+      throw new Error(`Could not edit alarm with id ${alarmId} for user with id ${id} ${error}`)
+    }
+  }
+
+  // Removing an alarm for a user using their ID
+  async removeAlarm(id: string, alarmId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            alarms: {
+              _id: new ObjectId(alarmId)
+            }
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove order from history for user with id ${id} ${error}`)
     }
   }
 }

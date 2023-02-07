@@ -256,6 +256,20 @@ const editAlarm = async (req: Request, res: Response) => {
   }
 }
 
+// Removing order history for a user using their ID
+const removeAlarm = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.removeAlarm(
+      req.params.id as string,
+      req.params.alarmId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -275,6 +289,7 @@ const userServices_routes = (app: Application) => {
   app.get('/users/:id/alarms', getAlarms)
   app.patch('/users/:id/alarms', addAlarm)
   app.patch('/users/:id/alarms/:alarmId', editAlarm)
+  app.delete('/users/:id/alarms/:alarmId', removeAlarm)
 }
 
 export default userServices_routes
