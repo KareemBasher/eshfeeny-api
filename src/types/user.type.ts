@@ -2,6 +2,7 @@ import { ObjectId } from 'mongodb'
 import OrderHistory from './order.type'
 
 interface Alarm {
+  _id?: ObjectId
   name: string
   notes?: string | null
   dose: number | null
