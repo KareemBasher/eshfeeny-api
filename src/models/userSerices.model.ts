@@ -265,6 +265,17 @@ class UserServices {
       throw new Error(`Could not remove search history item for user with id ${id} ${error}`)
     }
   }
+
+  // Getting all alarms for a user using their ID
+  async getAlarms(id: string): Promise<User> {
+    try {
+      const result = await db.collection('users').findOne({ _id: new ObjectId(id) })
+
+      return result?.alarms
+    } catch (error) {
+      throw new Error(`Could not get alarms for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices

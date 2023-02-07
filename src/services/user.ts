@@ -182,6 +182,16 @@ const removeSearchHistory = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all alarms for a user using their ID
+const getAlarms = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getAlarms(req.params.id as string)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -198,6 +208,7 @@ const userServices_routes = (app: Application) => {
   app.get('/users/:id/searchHistory', getSearchHistory)
   app.patch('/users/:id/searchHistory', updateSearchHistory)
   app.delete('/users/:id/searchHistory/:query', removeSearchHistory)
+  app.get('/users/:id/alarms', getAlarms)
 }
 
 export default userServices_routes
