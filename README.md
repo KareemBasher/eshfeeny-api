@@ -49,6 +49,20 @@ npm start
 | PATCH | `/users/:id/alarms/:alarmId`  | Edit an alarm | `name`, `notes`(optional), `dose`, `repetition`, `alarmTime`, `startDate`(optional), `endDate`(optional), `days`(optional) | user ID, alarm ID |
 | DELETE | `/users/:id/alarms/:alarmId`  | Remove an alarm | none | user ID, alarm ID |
 
+### Products Routes
+
+| Route  | Path | Description | Body | Params |
+| ------ | ---- | ----------- | ---- | ------ |
+| GET  | `/products/` | List all products | none | none |
+| GET | `/products/:id`  | Get a specific product | none | product ID |
+| POST | `/products/`  | Add a product | `nameAr`, `nameEn`, `description`, `price`, `volume`(optional), `amount` (optional), `useCases[]`, `activeIngredient[]` (opitonal), `sideEffects[]`, `type[]`, `category[]`, `usage[]`, `warning[]` | none |
+| PATCH | `/products/:id`  | Edit a product | `nameAr`, `nameEn`, `description`, `price`, `volume`(optional), `amount` (optional), `useCases[]`, `activeIngredient[]` (opitonal), `sideEffects[]`, `type[]`, `category[]`, `usage[]`, `warning[]` | product ID |
+| DELETE | `/products/:id`  | Remove a product | none | product ID |
+| GET  | `/products/category/:category` | Get all products from a certain category | none | category |
+| GET  | `/products/search/:query` | Search for a product using a query (has autocomplete) | none | query |
+| GET  | `/products/user/:userId/orderHistory/:orderHistoryId` | Get all products from a user's order history | none | user ID, order ID |
+| GET  | `/products/user/:userId/favorites` | Get all user favorite products | none | user ID |
+
 ## Requirements
 
 An environment file is required to run the project.\
