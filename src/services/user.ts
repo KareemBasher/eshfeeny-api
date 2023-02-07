@@ -186,6 +186,7 @@ const removeSearchHistory = async (req: Request, res: Response) => {
 const getAlarms = async (req: Request, res: Response) => {
   try {
     const result = await userServicesModel.getAlarms(req.params.id as string)
+    res.json(result)
   } catch (error) {
     res.status(500)
     res.json(error)
