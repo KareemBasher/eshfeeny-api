@@ -3,10 +3,13 @@ import OrderHistory from './order.type'
 
 interface Alarm {
   name: string
-  notes: string | null
-  dose: number
-  time: string[] | null
-  repetition: string | null
+  notes?: string | null
+  dose: number | null
+  alarmTime: string[] | number[] | null
+  repetition: string
+  startDate?: string | null
+  endDate?: string | null
+  days?: string | null
 }
 
 type User = {
