@@ -219,8 +219,36 @@ const addAlarm = async (req: Request, res: Response) => {
     endDate: req.body.endDate,
     days: req.body.days
   }
+
   try {
     const result = await userServicesModel.addAlarm(req.params.id as string, alarmObject)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Edit an alarm for a user
+const editAlarm = async (req: Request, res: Response) => {
+  const alarmObject: Alarm = {
+    _id: new ObjectId(req.params.alarmId as string),
+    name: req.body.name,
+    notes: req.body.notes,
+    dose: req.body.dose,
+    repetition: req.body.repetition.toLowerCase(),
+    alarmTime: req.body.alarmTime,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
+    days: req.body.days
+  }
+
+  try {
+    const result = await userServicesModel.editAlarm(
+      req.params.id as string,
+      req.params.alarmId as string,
+      alarmObject
+    )
     res.json(result)
   } catch (error) {
     res.status(500)
@@ -246,6 +274,7 @@ const userServices_routes = (app: Application) => {
   app.delete('/users/:id/searchHistory/:query', removeSearchHistory)
   app.get('/users/:id/alarms', getAlarms)
   app.patch('/users/:id/alarms', addAlarm)
+  app.patch('/users/:id/alarms/:alarmId', editAlarm)
 }
 
 export default userServices_routes

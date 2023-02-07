@@ -307,6 +307,24 @@ class UserServices {
       throw new Error(`Could not add alarm for user with id ${id} ${error}`)
     }
   }
+
+  // Edit an alarm for a user
+  async editAlarm(id: string, alarmId: string, alarm: Alarm): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id), 'alarms._id': new ObjectId(alarmId) },
+        {
+          $set: {
+            'alarms.$': alarm
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add alarm for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices
