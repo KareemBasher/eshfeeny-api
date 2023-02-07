@@ -44,6 +44,10 @@ npm start
 | DELETE | `/users/:id/orderHistory/:orderHistoryId`  | Remove an order history item | none | user ID, order history ID |
 | DELETE | `/users/:id/favorites/:productId`  | Remove a favorite product | none | user ID, product ID |
 | DELETE | `/users/:id/searchHistory/:query`  | Remove a search history item | none | user ID, query |
+| GET | `/users/:id/alarms/`  | Get users alarms | none | user ID |
+| PATCH | `/users/:id/alarms`  | Add an alarm | `name`, `notes`(optional), `dose`, `repetition`, `alarmTime`, `startDate`(optional), `endDate`(optional), `days`(optional) | user ID |
+| PATCH | `/users/:id/alarms/:alarmId`  | Add a favorite product | `name`, `notes`(optional), `dose`, `repetition`, `alarmTime`, `startDate`(optional), `endDate`(optional), `days`(optional) | user ID, alarm ID |
+| DELETE | `/users/:id/alarms/:alarmId`  | Remove an alarm | none | user ID, alarm ID |
 
 ## Requirements
 
