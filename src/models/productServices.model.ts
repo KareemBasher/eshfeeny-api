@@ -147,6 +147,19 @@ class ProductServicesModel {
       throw new Error(`Unable to find products that contain ${activeIngredient}, ${error}`)
     }
   }
+
+  // Show all products from a certain type
+  async getType(type: string): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ type: type })
+        .toArray()) as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from type ${type}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel

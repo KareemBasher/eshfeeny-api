@@ -62,6 +62,17 @@ const getAlternative = async (req: Request, res: Response) => {
   }
 }
 
+// Showing all products from a certain type
+const getType = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getType(req.params.type as string)
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -69,6 +80,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/user/:userId/orderHistory/:orderHistoryId', getOrderHistoryProducts)
   app.get('/products/user/:userId/favorites', getFavoriteProducts)
   app.get('/products/alternatives/:activeIngredient', getAlternative)
+  app.get('/products/type/:type', getType)
 }
 
 export default productServices_routes
