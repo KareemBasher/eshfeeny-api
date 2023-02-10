@@ -27,8 +27,8 @@ npm start
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/users/` | List all users | none | none |
 | GET | `/users/:id`  | Get a specific user | none | user ID |
-| POST | `/users/`  | Add a user | `name`, `password`, `email` | none |
-| PATCH | `/users/:id`  | Edit a user | `name`, `password`, `email` | user ID |
+| POST | `/users/`  | Add a user | `name`, `password`, `email`, `type` | none |
+| PATCH | `/users/:id`  | Edit a user | `name`, `password`, `email`, `type` | user ID |
 | DELETE | `/users/:id`  | Remove a user | none | user ID |
 | POST | `/users/verify`  | Verify a user for login | `password`, `email` | none |
 | PATCH | `/users/:id/address`  | Add an address for a user | `address` | user ID |
