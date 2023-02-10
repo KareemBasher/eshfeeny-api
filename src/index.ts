@@ -3,6 +3,7 @@ import morgan from 'morgan'
 import config from './config'
 import product_routes from './handlers/product'
 import bp from 'body-parser'
+import cors from 'cors'
 import user_routes from './handlers/user'
 import userServices_routes from './services/user'
 import productServices_routes from './services/product'
@@ -14,6 +15,7 @@ const app: Application = express()
 app.use(morgan('short'))
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
+app.use(cors())
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
