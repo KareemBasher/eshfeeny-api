@@ -78,7 +78,7 @@ class ProductServicesModel {
   }
 
   // Get all products in users order history
-  async getOrderHistoryProducts(userId: string, orderHistoryId: string): Promise<ObjectId[]> {
+  async getOrderHistoryProducts(userId: string, orderHistoryId: string): Promise<Product[]> {
     // Getting all product IDs from user collection
     const productIds: ObjectId[] = []
 
@@ -92,10 +92,20 @@ class ProductServicesModel {
       )[0] as unknown as OrderHistory
 
       order.products.forEach((product) => productIds.push(product._id))
-
-      return productIds
     } catch (error) {
-      console.log(error)
+      throw new Error(
+        `Unable to find products from order history array for user ${userId}, ${error}`
+      )
+    }
+
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ _id: { $in: productIds } })
+        .toArray()) as unknown as Product[]
+
+      return result
+    } catch (error) {
       throw new Error(
         `Unable to find products from order history array for user ${userId}, ${error}`
       )
