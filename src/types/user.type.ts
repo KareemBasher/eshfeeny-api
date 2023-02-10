@@ -18,6 +18,7 @@ type User = {
   name: string
   email: string
   password: string
+  type: string
   gender?: string
   address?: string | null
   age?: number | null

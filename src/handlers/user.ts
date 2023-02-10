@@ -32,7 +32,8 @@ const create = async (req: Request, res: Response) => {
   const userObj: User = {
     name: req.body.name,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
+    type: req.body.type
   }
 
   try {
@@ -49,7 +50,8 @@ const update = async (req: Request, res: Response) => {
   const userObj: User = {
     name: req.body.name,
     password: req.body.password,
-    email: req.body.email
+    email: req.body.email,
+    type: req.body.type
   }
 
   try {
