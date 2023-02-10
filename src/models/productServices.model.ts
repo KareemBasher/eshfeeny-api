@@ -50,7 +50,7 @@ class ProductServicesModel {
                   {
                     autocomplete: {
                       query: query,
-                      path: 'description'
+                      path: 'category'
                     }
                   },
                   {
