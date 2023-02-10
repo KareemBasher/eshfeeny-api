@@ -124,6 +124,19 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from favorites for user ${userId}, ${error}`)
     }
   }
+
+  // Show all products that have a certain active ingredient
+  async getAlternative(activeIngredient: string): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ activeIngredient: activeIngredient })
+        .toArray()) as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products that contain ${activeIngredient}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel

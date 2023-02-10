@@ -51,12 +51,24 @@ const getFavoriteProducts = async (req: Request, res: Response) => {
   }
 }
 
+// Showing all products that have a certain active ingredient
+const getAlternative = async (req: Request, res: Response) => {
+  try {
+    const product = await productServicesModel.getAlternative(req.params.activeIngredient as string)
+    res.json(product)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
   app.get('/products/search/:query', search)
   app.get('/products/user/:userId/orderHistory/:orderHistoryId', getOrderHistoryProducts)
   app.get('/products/user/:userId/favorites', getFavoriteProducts)
+  app.get('/products/alternatives/:activeIngredient', getAlternative)
 }
 
 export default productServices_routes
