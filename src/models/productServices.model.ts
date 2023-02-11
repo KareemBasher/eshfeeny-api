@@ -125,7 +125,6 @@ class ProductServicesModel {
     }
 
     try {
-      console.log(user?.favorites)
       const result = (
         await db.collection('products').find({ _id: { $in: user?.favorites } })
       ).toArray() as unknown as Product[]
