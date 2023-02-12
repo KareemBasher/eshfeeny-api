@@ -48,6 +48,9 @@ npm start
 | PATCH | `/users/:id/alarms`  | Add an alarm | `name`, `notes`(optional), `dose`, `repetition`, `alarmTime`, `startDate`(optional), `endDate`(optional), `days`(optional) | user ID |
 | PATCH | `/users/:id/alarms/:alarmId`  | Edit an alarm | `name`, `notes`(optional), `dose`, `repetition`, `alarmTime`, `startDate`(optional), `endDate`(optional), `days`(optional) | user ID, alarm ID |
 | DELETE | `/users/:id/alarms/:alarmId`  | Remove an alarm | none | user ID, alarm ID |
+| GET | `/users/:id/cart`  | Get user's cart items | none | user ID |
+| PATCH | `/users/:id/cart`  | Add a cart item | `productId` | user ID |
+| DELETE | `/users/:id/cart/:productId`  | Remove a cart item | none | user ID, product ID |
 
 ### Products Routes
 
@@ -64,6 +67,7 @@ npm start
 | GET  | `/products/user/:userId/favorites` | Get all user favorite products | none | user ID |
 | GET  | `/products/alternatives/:activeIngredient` | Get all products that contain a certain active ingredient | none | active ingredient |
 | GET  | `/products/type/:type` | Get all products from a certain type | none | type |
+| GET  | `/products/user/:userId/cart` | Get all user cart items | none | user ID |
 
 ## Requirements
 
