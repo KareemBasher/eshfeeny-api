@@ -159,6 +159,28 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from type ${type}, ${error}`)
     }
   }
+
+  // Get all cart items for a user using their IDs
+  async getCartProducts(userId: string): Promise<Product[]> {
+    // Getting all cart product IDs
+    let user: User
+    try {
+      user = (await db
+        .collection('users')
+        .findOne({ _id: new ObjectId(userId) })) as unknown as User
+    } catch (error) {
+      throw new Error(`Unable to find product ids from cart for user ${userId}, ${error}`)
+    }
+
+    try {
+      const result = (
+        await db.collection('products').find({ _id: { $in: user?.cart } })
+      ).toArray() as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from cart for user ${userId}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel

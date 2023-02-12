@@ -128,7 +128,7 @@ const getFavorites = async (req: Request, res: Response) => {
   }
 }
 
-// Updating order history for a user using their ID
+// Updating favorite product for a user using their ID
 const addFavoriteProduct = async (req: Request, res: Response) => {
   try {
     const result = await userServicesModel.updateFavorites(
@@ -142,7 +142,7 @@ const addFavoriteProduct = async (req: Request, res: Response) => {
   }
 }
 
-// Removing order history for a user using their ID
+// Removing favorite product for a user using their ID
 const removeFavoriteProduct = async (req: Request, res: Response) => {
   try {
     const result = await userServicesModel.removeFavorites(
@@ -256,6 +256,45 @@ const editAlarm = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all cart items from a user
+const getCartItems = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getCartItems(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Updating cart items for a user using their ID
+const addCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.updateCartItems(
+      req.params.id as string,
+      req.body.productId
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Removing favorite product for a user using their ID
+const removeCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.removeCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Removing order history for a user using their ID
 const removeAlarm = async (req: Request, res: Response) => {
   try {
@@ -290,6 +329,9 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/alarms', addAlarm)
   app.patch('/users/:id/alarms/:alarmId', editAlarm)
   app.delete('/users/:id/alarms/:alarmId', removeAlarm)
+  app.get('/users/:id/cart', getCartItems)
+  app.patch('/users/:id/cart', addCartItem)
+  app.delete('/users/:id/cart/:productId', removeCartItem)
 }
 
 export default userServices_routes

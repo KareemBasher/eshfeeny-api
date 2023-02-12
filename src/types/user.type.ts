@@ -27,6 +27,7 @@ type User = {
   searchHistory?: string[] | null
   favorites?: ObjectId[] | null
   orderHistory?: OrderHistory[] | null
+  cart?: ObjectId[] | null
 }
 
 export default User

@@ -345,6 +345,57 @@ class UserServices {
       throw new Error(`Could not remove order from history for user with id ${id} ${error}`)
     }
   }
+
+  // Getting all cart items from a user
+  async getCartItems(id: string): Promise<User[]> {
+    try {
+      const result = (await db
+        .collection('users')
+        .find({ _id: new ObjectId(id) })
+        .project({ cart: 1 })
+        .toArray()) as unknown as User[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get cart items for user with id ${id} ${error}`)
+    }
+  }
+
+  // Updating cart items for a user using their ID
+  async updateCartItems(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            cart: new ObjectId(productId)
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update cart items for user with id ${id} ${error}`)
+    }
+  }
+
+  // Removing cart items for a user using their ID
+  async removeCartItem(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            cart: new ObjectId(productId)
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove favorite product for user with id ${id} ${error}`)
+    }
+  }
 }
 
 export default UserServices
