@@ -161,67 +161,14 @@ class ProductServicesModel {
     }
   }
 
-  async GetProductById(productId: string): Promise<Product> {
-    try {
-      const result = (await db
-        .collection('products')
-        .findOne({ _id: new ObjectId(productId) })) as unknown as Product
-      return result
-    } catch (error) {
-      throw new Error(`Unable to find product with id ${productId}, ${error}`)
-    }
-  }
-
-  // Get all cart items for a user using their IDs
-  async getCartProducts(userId: string): Promise<Product[]> {
-    const products: { product: Product; quantity: number }[] = []
-
-    try {
-      const result = db.collection('users').aggregate([
-        {
-          $match: {
-            _id: new ObjectId(userId)
-          },
-          $lookup: {
-            from: 'products',
-            localField: 'cart._id',
-            foreignField: '_id',
-            as: 'products'
-          },
-          $group: {
-            _id: '$_id',
-            products: products,
-            quantity: '$cart.quantity'
-          }
-        }
-      ]) as unknown as Product[]
-
-      return result
-    } catch (error) {
-      throw new Error(`Unable to find product ids from cart for user ${userId}, ${error}`)
-    }
-  }
-
   // Check if a product is in the cart of a user
-  async isProductInCart(userId: string, productId: string): Promise<number | string> {
+  async isProductInCart(userId: string, productId: string): Promise<User> {
     try {
       const result = (await db
         .collection('users')
-        .findOne({ _id: new ObjectId(userId) })) as unknown as User
+        .findOne({ _id: new ObjectId(userId), 'cart._id': productId })) as unknown as User
 
-      if (result.cart) {
-        try {
-          const product = result.cart.filter((product) =>
-            product?._id.equals(new ObjectId(productId))
-          )[0]
-
-          return product?.quantity
-        } catch (error) {
-          return 'Product not found in cart'
-        }
-      }
-
-      return 'Product not found in cart'
+      return result
     } catch (error) {
       throw new Error(`Unable to find product ${productId} in cart for user ${userId}, ${error}`)
     }

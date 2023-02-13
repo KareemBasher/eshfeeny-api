@@ -4,6 +4,7 @@ import OrderHistory from '../types/order.type'
 import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
+import Product from '../types/product.type'
 
 // Interface for user alarms
 interface Alarm {
@@ -349,11 +350,13 @@ class UserServices {
   // Getting all cart items from a user
   async getCartItems(id: string): Promise<User[]> {
     try {
-      const result = (await db
-        .collection('users')
-        .find({ _id: new ObjectId(id) })
-        .project({ cart: 1 })
-        .toArray()) as unknown as User[]
+      const result = (
+        await db
+          .collection('users')
+          .find({ _id: new ObjectId(id) })
+          .project({ cart: 1, _id: 0 })
+          .toArray()
+      )[0] as unknown as User[]
 
       return result
     } catch (error) {
@@ -363,8 +366,18 @@ class UserServices {
 
   // Updating cart items for a user using their ID
   async updateCartItems(id: string, productId: string): Promise<User> {
+    // Getting the item from the products collection
+    let product: Product
+
+    try {
+      product = (await db
+        .collection('products')
+        .findOne({ _id: new ObjectId(productId) })) as unknown as Product
+    } catch (error) {
+      throw new Error(`Could not get product with id ${productId} ${error}`)
+    }
     const cartIem = {
-      _id: new ObjectId(productId),
+      product: product,
       quantity: 1
     }
 

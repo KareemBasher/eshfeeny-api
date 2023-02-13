@@ -73,17 +73,6 @@ const getType = async (req: Request, res: Response) => {
   }
 }
 
-// Get all cart products for a user using their IDs
-const getCartProducts = async (req: Request, res: Response) => {
-  try {
-    const products = await productServicesModel.getCartProducts(req.params.userId as string)
-    res.json(products)
-  } catch (error) {
-    res.status(500)
-    res.json(error)
-  }
-}
-
 // Check if a product is in the cart of a user
 const isProductInCart = async (req: Request, res: Response) => {
   try {
@@ -106,7 +95,6 @@ const productServices_routes = (app: Application) => {
   app.get('/products/user/:userId/favorites', getFavoriteProducts)
   app.get('/products/alternatives/:activeIngredient', getAlternative)
   app.get('/products/type/:type', getType)
-  app.get('/products/user/:userId/cart', getCartProducts)
   app.get('/products/user/:userId/cart/:productId', isProductInCart)
 }
 
