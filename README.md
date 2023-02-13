@@ -52,7 +52,7 @@ npm start
 | PATCH | `/users/:id/cart`  | Add a cart item | `productId` | user ID |
 | DELETE | `/users/:id/cart/:productId`  | Remove a cart item | none | user ID, product ID |
 | PATCH | `/users/:id/cart/:productId/1`  | Increment the quantity of a cart item | none | user ID, productId |
-| PATCH | `/users/:id/cart/:productId/1`  | Decrement the quantity of a cart item | none | user ID, productId |
+| PATCH | `/users/:id/cart/:productId/-1`  | Decrement the quantity of a cart item | none | user ID, productId |
 
 ### Products Routes
 
