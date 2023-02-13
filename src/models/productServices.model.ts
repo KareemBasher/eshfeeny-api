@@ -187,6 +187,31 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from cart for user ${userId}, ${error}`)
     }
   }
+
+  // Check if a product is in the cart of a user
+  async isProductInCart(userId: string, productId: string): Promise<number | boolean> {
+    try {
+      const result = (await db
+        .collection('users')
+        .findOne({ _id: new ObjectId(userId) })) as unknown as User
+
+      if (result.cart) {
+        try {
+          const product = result.cart.filter((product) =>
+            product?._id.equals(new ObjectId(productId))
+          )[0]
+
+          return product?.quantity
+        } catch (error) {
+          return false
+        }
+      }
+
+      return false
+    } catch (error) {
+      throw new Error(`Unable to find product ${productId} in cart for user ${userId}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel
