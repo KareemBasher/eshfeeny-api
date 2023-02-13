@@ -14,7 +14,7 @@ interface Alarm {
 }
 
 interface cart {
-  _id?: ObjectId
+  _id: ObjectId
   quantity: number
 }
 

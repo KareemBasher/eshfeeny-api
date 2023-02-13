@@ -116,6 +116,7 @@ class ProductServicesModel {
   async getFavoriteProducts(userId: string): Promise<Product[]> {
     // Getting all favorite products IDs
     let user: User
+
     try {
       user = (await db
         .collection('users')
@@ -163,18 +164,23 @@ class ProductServicesModel {
   // Get all cart items for a user using their IDs
   async getCartProducts(userId: string): Promise<Product[]> {
     // Getting all cart product IDs
-    let user: User
+    const productIds: ObjectId[] = []
+
     try {
-      user = (await db
+      const result = (await db
         .collection('users')
         .findOne({ _id: new ObjectId(userId) })) as unknown as User
+
+      if (result.cart) {
+        result.cart.forEach((product) => productIds.push(product?._id))
+      }
     } catch (error) {
       throw new Error(`Unable to find product ids from cart for user ${userId}, ${error}`)
     }
 
     try {
       const result = (
-        await db.collection('products').find({ _id: { $in: user?.cart } })
+        await db.collection('products').find({ _id: { $in: productIds } })
       ).toArray() as unknown as Product[]
       return result
     } catch (error) {
