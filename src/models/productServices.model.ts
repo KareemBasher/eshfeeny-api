@@ -203,7 +203,7 @@ class ProductServicesModel {
   }
 
   // Check if a product is in the cart of a user
-  async isProductInCart(userId: string, productId: string): Promise<number> {
+  async isProductInCart(userId: string, productId: string): Promise<number | string> {
     try {
       const result = (await db
         .collection('users')
@@ -217,11 +217,11 @@ class ProductServicesModel {
 
           return product?.quantity
         } catch (error) {
-          return 0
+          return 'Product not found in cart'
         }
       }
 
-      return 0
+      return 'Product not found in cart'
     } catch (error) {
       throw new Error(`Unable to find product ${productId} in cart for user ${userId}, ${error}`)
     }
