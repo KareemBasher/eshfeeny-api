@@ -363,12 +363,17 @@ class UserServices {
 
   // Updating cart items for a user using their ID
   async updateCartItems(id: string, productId: string): Promise<User> {
+    const cartIem = {
+      _id: new ObjectId(productId),
+      quantity: 1
+    }
+
     try {
       const result = (await db.collection('users').updateOne(
         { _id: new ObjectId(id) },
         {
           $push: {
-            cart: new ObjectId(productId)
+            cart: cartIem
           }
         }
       )) as unknown as User
