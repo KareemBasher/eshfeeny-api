@@ -18,7 +18,7 @@ app.use(bp.urlencoded({ extended: true }))
 app.use(cors({ origin: '*' }))
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port: ${PORT}`)
+  console.log(`Server is listening on port: ${PORT}`)
 })
 
 product_routes(app)
