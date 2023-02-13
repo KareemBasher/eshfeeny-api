@@ -15,7 +15,7 @@ const app: Application = express()
 app.use(morgan('short'))
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
-app.use(cors())
+app.use(cors({ origin: '*' }))
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
