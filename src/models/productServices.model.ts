@@ -161,35 +161,49 @@ class ProductServicesModel {
     }
   }
 
-  // Get all cart items for a user using their IDs
-  async getCartProducts(userId: string): Promise<Product[]> {
-    // Getting all cart product IDs
-    const productIds: ObjectId[] = []
-
+  async GetProductById(productId: string): Promise<Product> {
     try {
       const result = (await db
-        .collection('users')
-        .findOne({ _id: new ObjectId(userId) })) as unknown as User
-
-      if (result.cart) {
-        result.cart.forEach((product) => productIds.push(product?._id))
-      }
-    } catch (error) {
-      throw new Error(`Unable to find product ids from cart for user ${userId}, ${error}`)
-    }
-
-    try {
-      const result = (
-        await db.collection('products').find({ _id: { $in: productIds } })
-      ).toArray() as unknown as Product[]
+        .collection('products')
+        .findOne({ _id: new ObjectId(productId) })) as unknown as Product
       return result
     } catch (error) {
-      throw new Error(`Unable to find products from cart for user ${userId}, ${error}`)
+      throw new Error(`Unable to find product with id ${productId}, ${error}`)
+    }
+  }
+
+  // Get all cart items for a user using their IDs
+  async getCartProducts(userId: string): Promise<Product[]> {
+    const products: { product: Product; quantity: number }[] = []
+
+    try {
+      const result = db.collection('users').aggregate([
+        {
+          $match: {
+            _id: new ObjectId(userId)
+          },
+          $lookup: {
+            from: 'products',
+            localField: 'cart._id',
+            foreignField: '_id',
+            as: 'products'
+          },
+          $group: {
+            _id: '$_id',
+            products: products,
+            quantity: '$cart.quantity'
+          }
+        }
+      ]) as unknown as Product[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find product ids from cart for user ${userId}, ${error}`)
     }
   }
 
   // Check if a product is in the cart of a user
-  async isProductInCart(userId: string, productId: string): Promise<number | boolean> {
+  async isProductInCart(userId: string, productId: string): Promise<number> {
     try {
       const result = (await db
         .collection('users')
@@ -203,11 +217,11 @@ class ProductServicesModel {
 
           return product?.quantity
         } catch (error) {
-          return false
+          return 0
         }
       }
 
-      return false
+      return 0
     } catch (error) {
       throw new Error(`Unable to find product ${productId} in cart for user ${userId}, ${error}`)
     }
