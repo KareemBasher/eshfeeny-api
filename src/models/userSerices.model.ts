@@ -379,6 +379,42 @@ class UserServices {
     }
   }
 
+  // Increment cart items quantity for a user using their ID
+  async incrementCartItem(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id), 'cart._id': new ObjectId(productId) },
+        {
+          $inc: {
+            'cart.$.quantity': 1
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not increment cart items for user with id ${id} ${error}`)
+    }
+  }
+
+  // Decrement cart items quantity for a user using their ID
+  async decrementCartItem(id: string, productId: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id), 'cart._id': new ObjectId(productId) },
+        {
+          $inc: {
+            'cart.$.quantity': -1
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not decrement cart items for user with id ${id} ${error}`)
+    }
+  }
+
   // Removing cart items for a user using their ID
   async removeCartItem(id: string, productId: string): Promise<User> {
     try {

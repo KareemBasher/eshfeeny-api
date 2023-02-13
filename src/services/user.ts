@@ -309,6 +309,34 @@ const removeAlarm = async (req: Request, res: Response) => {
   }
 }
 
+// Incrementing the quantity of a product in the cart for a user
+const incrementCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.incrementCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Decrementing the quantity of a product in the cart for a user
+const decrementCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.decrementCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -332,6 +360,8 @@ const userServices_routes = (app: Application) => {
   app.get('/users/:id/cart', getCartItems)
   app.patch('/users/:id/cart', addCartItem)
   app.delete('/users/:id/cart/:productId', removeCartItem)
+  app.patch('/users/:id/cart/:productId/1', incrementCartItem)
+  app.patch('/users/:id/cart/:productId/-1', decrementCartItem)
 }
 
 export default userServices_routes
