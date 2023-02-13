@@ -160,19 +160,6 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from type ${type}, ${error}`)
     }
   }
-
-  // Check if a product is in the cart of a user
-  async isProductInCart(userId: string, productId: string): Promise<User> {
-    try {
-      const result = (await db
-        .collection('users')
-        .findOne({ _id: new ObjectId(userId), 'cart._id': productId })) as unknown as User
-
-      return result
-    } catch (error) {
-      throw new Error(`Unable to find product ${productId} in cart for user ${userId}, ${error}`)
-    }
-  }
 }
 
 export default ProductServicesModel
