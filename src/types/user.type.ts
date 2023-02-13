@@ -13,6 +13,11 @@ interface Alarm {
   days?: string | null
 }
 
+interface cart {
+  _id?: ObjectId
+  quantity: number
+}
+
 type User = {
   id?: ObjectId
   name: string
@@ -27,7 +32,7 @@ type User = {
   searchHistory?: string[] | null
   favorites?: ObjectId[] | null
   orderHistory?: OrderHistory[] | null
-  cart?: ObjectId[] | null
+  cart?: cart[] | null
 }
 
 export default User
