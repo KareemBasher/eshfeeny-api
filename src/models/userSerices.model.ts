@@ -422,7 +422,9 @@ class UserServices {
         { _id: new ObjectId(id) },
         {
           $pull: {
-            cart: new ObjectId(productId)
+            cart: {
+              _id: new ObjectId(productId)
+            }
           }
         }
       )) as unknown as User
