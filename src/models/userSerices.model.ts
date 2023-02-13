@@ -401,7 +401,7 @@ class UserServices {
   async incrementCartItem(id: string, productId: string): Promise<User> {
     try {
       const result = (await db.collection('users').updateOne(
-        { _id: new ObjectId(id), 'cart._id': new ObjectId(productId) },
+        { _id: new ObjectId(id), 'cart.product._id': new ObjectId(productId) },
         {
           $inc: {
             'cart.$.quantity': 1
@@ -419,7 +419,7 @@ class UserServices {
   async decrementCartItem(id: string, productId: string): Promise<User> {
     try {
       const result = (await db.collection('users').updateOne(
-        { _id: new ObjectId(id), 'cart._id': new ObjectId(productId) },
+        { _id: new ObjectId(id), 'cart.product._id': new ObjectId(productId) },
         {
           $inc: {
             'cart.$.quantity': -1
