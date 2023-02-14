@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb'
 import OrderHistory from './order.type'
+import Product from './product.type'
 
 interface Alarm {
   _id?: ObjectId
@@ -14,7 +15,7 @@ interface Alarm {
 }
 
 interface cart {
-  _id: ObjectId
+  product: Product
   quantity: number
 }
 

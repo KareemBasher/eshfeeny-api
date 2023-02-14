@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb'
 
 type Product = {
-  id?: ObjectId
+  _id?: ObjectId
   nameAr: string
   nameEn: string | null
   description: string

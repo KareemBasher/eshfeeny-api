@@ -160,6 +160,31 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from type ${type}, ${error}`)
     }
   }
+
+  // Get cart items from user (ids and quantity)
+  async checkCart(userId: string, productId: string): Promise<boolean | number> {
+    try {
+      const result = (await db.collection('users').findOne({
+        _id: new ObjectId(userId)
+      })) as unknown as User
+
+      let quantity = 0
+
+      if (result.cart) {
+        result.cart?.forEach((item) => {
+          const id = item.product._id ?? new ObjectId()
+          if (id.equals(new ObjectId(productId))) {
+            quantity = item.quantity
+          }
+        })
+      }
+
+      return quantity
+    } catch (error) {
+      console.log(error)
+      throw new Error(`Unable to find products from cart for user ${userId}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel

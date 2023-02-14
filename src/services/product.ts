@@ -73,6 +73,20 @@ const getType = async (req: Request, res: Response) => {
   }
 }
 
+// Get all products from a user's cart (ids and quantity)
+const checkCart = async (req: Request, res: Response) => {
+  try {
+    const user = await productServicesModel.checkCart(
+      req.params.userId as string,
+      req.params.productId as string
+    )
+    res.json(user)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -81,6 +95,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/user/:userId/favorites', getFavoriteProducts)
   app.get('/products/alternatives/:activeIngredient', getAlternative)
   app.get('/products/type/:type', getType)
+  app.get('/products/user/:userId/cart/:productId', checkCart)
 }
 
 export default productServices_routes
