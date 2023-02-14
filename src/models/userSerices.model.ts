@@ -441,7 +441,7 @@ class UserServices {
         {
           $pull: {
             cart: {
-              _id: new ObjectId(productId)
+              'product._id': new ObjectId(productId)
             }
           }
         }
