@@ -69,7 +69,6 @@ npm start
 | GET  | `/products/user/:userId/favorites` | Get all user favorite products | none | user ID |
 | GET  | `/products/alternatives/:activeIngredient` | Get all products that contain a certain active ingredient | none | active ingredient |
 | GET  | `/products/type/:type` | Get all products from a certain type | none | type |
-| GET  | `/products/user/:userId/cart` | Get all user cart items | none | user ID |
 | GET  | `/products/user/:userId/cart/:productId` | Check if an item is in the user's cart | none | user ID, product ID |
 
 ## Requirements
