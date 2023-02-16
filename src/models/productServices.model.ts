@@ -122,6 +122,7 @@ class ProductServicesModel {
         .collection('users')
         .findOne({ _id: new ObjectId(userId) })) as unknown as User
     } catch (error) {
+      return []
       throw new Error(`Unable to find product ids from favorites for user ${userId}, ${error}`)
     }
 
