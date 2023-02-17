@@ -95,6 +95,17 @@ class UserModel {
       throw new Error(`Unable to delete user with id ${id}, ${error}`)
     }
   }
+
+  // Check if user exists using their email
+  async checkUserEmail(email: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').findOne({ email: email })) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not check user email ${email} ${error}`)
+    }
+  }
 }
 
 export default UserModel
