@@ -20,6 +20,12 @@ interface Alarm {
 }
 
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
+const hashPassowrd = (password: string) => {
+  const salt = parseInt(config.salt as string)
+  return bcrypt.hashSync(password + config.secret, salt)
+}
+
+// Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const comparePassword = (password: string, hashed: string) => {
   return bcrypt.compareSync(password + config.secret, hashed)
 }
@@ -450,6 +456,44 @@ class UserServices {
       return result
     } catch (error) {
       throw new Error(`Could not remove favorite product for user with id ${id} ${error}`)
+    }
+  }
+
+  // Update user's name, email, and/or phone number
+  async updateProfile(id: string, name: string, email: string, phone: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            name: name,
+            email: email,
+            phoneNumber: phone
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update profile for user with id ${id} ${error}`)
+    }
+  }
+
+  // Update user's password
+  async updatePassword(id: string, password: string): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            password: hashPassowrd(password)
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update password for user with id ${id} ${error}`)
     }
   }
 }

@@ -53,6 +53,8 @@ npm start
 | DELETE | `/users/:id/cart/:productId`  | Remove a cart item | none | user ID, product ID |
 | PATCH | `/users/:id/cart/:productId/1`  | Increment the quantity of a cart item | none | user ID, productId |
 | PATCH | `/users/:id/cart/:productId/-1`  | Decrement the quantity of a cart item | none | user ID, productId |
+| PATCH | `/users/:id/profile`  | Update a user's name, email, and/or phone number | `name`, `email`, `phoneNumber` | user ID |
+| PATCH | `/users/:id/password`  | Update a user's password | `password` | user ID |
 
 ### Products Routes
 

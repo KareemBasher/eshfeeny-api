@@ -337,6 +337,36 @@ const decrementCartItem = async (req: Request, res: Response) => {
   }
 }
 
+// Update user's name, email, and/or phone number
+const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.updateProfile(
+      req.params.id as string,
+      req.body.name,
+      req.body.email,
+      req.body.phoneNumber
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Update user's password
+const updatePassword = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.updatePassword(
+      req.params.id as string,
+      req.body.password
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -362,6 +392,8 @@ const userServices_routes = (app: Application) => {
   app.delete('/users/:id/cart/:productId', removeCartItem)
   app.patch('/users/:id/cart/:productId/1', incrementCartItem)
   app.patch('/users/:id/cart/:productId/-1', decrementCartItem)
+  app.patch('/users/:id/profile', updateProfile)
+  app.patch('/users/:id/password', updatePassword)
 }
 
 export default userServices_routes
