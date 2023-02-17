@@ -10,5 +10,5 @@ export default {
   salt: SALT,
   signiture: SIGNITURE,
   dbString: MONGODB_STRING,
-  sendgrKey: SENDGRID_API
+  sendgridKey: SENDGRID_API
 }
