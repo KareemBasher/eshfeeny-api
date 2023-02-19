@@ -122,15 +122,18 @@ class ProductServicesModel {
         .collection('users')
         .findOne({ _id: new ObjectId(userId) })) as unknown as User
     } catch (error) {
-      return []
       throw new Error(`Unable to find product ids from favorites for user ${userId}, ${error}`)
     }
 
     try {
-      const result = (
-        await db.collection('products').find({ _id: { $in: user?.favorites } })
-      ).toArray() as unknown as Product[]
-      return result
+      if (user.favorites) {
+        const result = (
+          await db.collection('products').find({ _id: { $in: user?.favorites } })
+        ).toArray() as unknown as Product[]
+        return result
+      } else {
+        return []
+      }
     } catch (error) {
       throw new Error(`Unable to find products from favorites for user ${userId}, ${error}`)
     }
