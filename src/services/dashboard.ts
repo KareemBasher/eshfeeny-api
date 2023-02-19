@@ -6,17 +6,23 @@ import config from '../config'
 sgMail.setApiKey(config.sendgridKey as string)
 
 // Function to generate random code
-const code = () => Math.random().toString(36).substring(2, 10)
+const code = () => Math.floor(1000 + Math.random() * 9000).toString()
 
 const sendEmail = (req: Request, res: Response) => {
-  const verificationCode = code()
+  const verificationCode = code() as unknown as string
 
   const msg = {
     to: req.params.to as string,
     from: config.sendgridEmail as string,
     subject: 'تغيير كلمة المرور',
     test: 'test message from sendgrid',
-    html: `<strong>كود التحقق: ${verificationCode}</strong>`
+    templateId: config.sendgridTemplate as string,
+    dynamic_template_data: {
+      one: verificationCode[0],
+      two: verificationCode[1],
+      three: verificationCode[2],
+      four: verificationCode[3]
+    }
   }
 
   try {

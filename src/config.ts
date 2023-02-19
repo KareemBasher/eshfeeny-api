@@ -2,8 +2,16 @@ import * as dotenv from 'dotenv'
 
 dotenv.config()
 
-const { PORT, BCRYPT_SECRET, SALT, SIGNITURE, MONGODB_STRING, SENDGRID_API, SENDGRID_EMAIL } =
-  process.env
+const {
+  PORT,
+  BCRYPT_SECRET,
+  SALT,
+  SIGNITURE,
+  MONGODB_STRING,
+  SENDGRID_API,
+  SENDGRID_EMAIL,
+  SENDGRID_TEMPLATE_ID
+} = process.env
 
 export default {
   port: PORT,
@@ -12,5 +20,6 @@ export default {
   signiture: SIGNITURE,
   dbString: MONGODB_STRING,
   sendgridKey: SENDGRID_API,
-  sendgridEmail: SENDGRID_EMAIL
+  sendgridEmail: SENDGRID_EMAIL,
+  sendgridTemplate: SENDGRID_TEMPLATE_ID
 }
