@@ -74,6 +74,12 @@ npm start
 | GET  | `/products/type/:type` | Get all products from a certain type | none | type |
 | GET  | `/products/user/:userId/cart/:productId` | Check if an item is in the user's cart | none | user ID, product ID |
 
+### Dashboard Routes
+
+| Route  | Path | Description | Body | Params |
+| ------ | ---- | ----------- | ---- | ------ |
+| GET  | `/email/:userEmail` | Send an email with a verification code | none | user email |
+
 ## Requirements
 
 An environment file is required to run the project.\
@@ -83,3 +89,7 @@ a `.env` file that includes:
 * `MONGODB_STRING` the MongoDB connection URI.
 * `BCRYPT_SECRET` pepper for bcrypt used in password encryption.
 * `SALT` salt rounds for bcrypt used in password encryption.
+* `SENDGRID_API` SendGrid WebAPI key for sending emails.
+* `SENDGRID_EMAIL` SendGrid Authorized Sender email.
+* `SENDGRID_EMAIL` SendGrid Authorized Sender email.
+* `SENDGRID_TEMPLATE_ID` SendGrid email template ID.
