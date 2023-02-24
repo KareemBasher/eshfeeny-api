@@ -91,5 +91,4 @@ a `.env` file that includes:
 * `SALT` salt rounds for bcrypt used in password encryption.
 * `SENDGRID_API` SendGrid WebAPI key for sending emails.
 * `SENDGRID_EMAIL` SendGrid Authorized Sender email.
-* `SENDGRID_EMAIL` SendGrid Authorized Sender email.
 * `SENDGRID_TEMPLATE_ID` SendGrid email template ID.
