@@ -1,6 +1,9 @@
 import { Application, Request, Response } from 'express'
 import sgMail from '@sendgrid/mail'
 import config from '../config'
+import FormData from 'form-data'
+import fs from 'fs'
+import axios from 'axios'
 
 // Configure SendGrid
 sgMail.setApiKey(config.sendgridKey as string)
@@ -34,8 +37,38 @@ const sendEmail = (req: Request, res: Response) => {
   }
 }
 
+interface ImgbbResponseObject {
+  data: { url: string }
+}
+
+// Handling image uploads
+const uploadImage = async (imagePath: string): Promise<string> => {
+  const form = new FormData()
+  form.append('key', config.imgbbKey as string)
+  form.append('image', fs.createReadStream(imagePath))
+
+  try {
+    const result = await axios.post<ImgbbResponseObject>('https://api.imgbb.com/1/upload', form)
+
+    return result.data.data.url
+  } catch (error) {
+    return `Failed to uploadd image, ${error}`
+  }
+}
+
+const getUploadedImage = async (req: Request, res: Response) => {
+  try {
+    const result = await uploadImage(req.body.imagePath)
+    res.send(result)
+  } catch (error) {
+    res.status(500)
+    res.json(`Unable to upload image, ${error}`)
+  }
+}
+
 const dashboard_routes = (app: Application) => {
   app.get('/email/:to', sendEmail)
+  app.post('/upload', getUploadedImage)
 }
 
 export default dashboard_routes
