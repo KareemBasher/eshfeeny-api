@@ -10,7 +10,8 @@ const {
   MONGODB_STRING,
   SENDGRID_API,
   SENDGRID_EMAIL,
-  SENDGRID_TEMPLATE_ID
+  SENDGRID_TEMPLATE_ID,
+  IMGBB_API_KEY
 } = process.env
 
 export default {
@@ -21,5 +22,6 @@ export default {
   dbString: MONGODB_STRING,
   sendgridKey: SENDGRID_API,
   sendgridEmail: SENDGRID_EMAIL,
-  sendgridTemplate: SENDGRID_TEMPLATE_ID
+  sendgridTemplate: SENDGRID_TEMPLATE_ID,
+  imgbbKey: IMGBB_API_KEY
 }
