@@ -87,6 +87,17 @@ const checkCart = async (req: Request, res: Response) => {
   }
 }
 
+// Showing all products from a certain brand
+const getBrand = async (req: Request, res: Response) => {
+  try {
+    const product = await productServicesModel.getBrand(req.params.brand as string)
+    res.json(product)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -96,6 +107,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/alternatives/:activeIngredient', getAlternative)
   app.get('/products/type/:type', getType)
   app.get('/products/user/:userId/cart/:productId', checkCart)
+  app.get('/products/brand/:brand', getBrand)
 }
 
 export default productServices_routes

@@ -189,6 +189,19 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from cart for user ${userId}, ${error}`)
     }
   }
+
+  // Show all products from a certain brand
+  async getBrand(brand: string): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ brand: brand })
+        .toArray()) as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from brand ${brand}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel
