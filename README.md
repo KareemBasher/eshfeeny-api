@@ -79,6 +79,8 @@ npm start
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/email/:userEmail` | Send an email with a verification code | none | user email |
+| POST  | `/upload/` | Upload an image and get sharable url | `imagePath` | none |
+
 
 ## Requirements
 
