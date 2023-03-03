@@ -15,6 +15,7 @@ type Product = {
   category: string[]
   usage: string[]
   warning: string[] | null
+  brand: string | null
 }
 
 export default Product
