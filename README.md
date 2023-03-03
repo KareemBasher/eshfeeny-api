@@ -80,7 +80,7 @@ npm start
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/email/:userEmail` | Send an email with a verification code | none | user email |
 | POST  | `/upload/` | Upload an image and get sharable url | `imagePath` | none |
-
+| POST  | `/imageSearch/` | Get search results for an image | `imagePath` | none |
 
 ## Requirements
 
