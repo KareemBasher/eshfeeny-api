@@ -11,7 +11,9 @@ const {
   SENDGRID_API,
   SENDGRID_EMAIL,
   SENDGRID_TEMPLATE_ID,
-  IMGBB_API_KEY
+  IMGBB_API_KEY,
+  MS_AZURE_CV_KEY,
+  MS_AZURE_CV_URL
 } = process.env
 
 export default {
@@ -23,5 +25,7 @@ export default {
   sendgridKey: SENDGRID_API,
   sendgridEmail: SENDGRID_EMAIL,
   sendgridTemplate: SENDGRID_TEMPLATE_ID,
-  imgbbKey: IMGBB_API_KEY
+  imgbbKey: IMGBB_API_KEY,
+  msAzureCVKey: MS_AZURE_CV_KEY,
+  MSAzureCVURL: MS_AZURE_CV_URL
 }
