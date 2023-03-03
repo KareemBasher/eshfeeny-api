@@ -42,7 +42,8 @@ const create = async (req: Request, res: Response) => {
     type: req.body.type,
     category: req.body.category,
     usage: req.body.usage,
-    warning: req.body.warning
+    warning: req.body.warning,
+    brand: req.body.brand
   }
 
   try {
@@ -69,7 +70,8 @@ const update = async (req: Request, res: Response) => {
     type: req.body.type,
     category: req.body.category,
     usage: req.body.usage,
-    warning: req.body.warning
+    warning: req.body.warning,
+    brand: req.body.brnad
   }
 
   try {
