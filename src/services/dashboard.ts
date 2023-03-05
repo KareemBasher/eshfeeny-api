@@ -1,8 +1,6 @@
 import { Application, Request, Response } from 'express'
 import sgMail from '@sendgrid/mail'
 import config from '../config'
-import FormData from 'form-data'
-import fs from 'fs'
 import axios from 'axios'
 import ProductServicesModel from '../models/productServices.model'
 
@@ -41,40 +39,8 @@ const sendEmail = (req: Request, res: Response) => {
   }
 }
 
-interface ImgbbResponseObject {
-  data: { url: string }
-}
-
-// Handling image uploads
-const uploadImage = async (imagePath: string): Promise<string> => {
-  const form = new FormData()
-  form.append('key', config.imgbbKey as string)
-  form.append('image', fs.createReadStream(imagePath))
-
-  try {
-    const result = await axios.post<ImgbbResponseObject>('https://api.imgbb.com/1/upload', form)
-
-    return result.data.data.url
-  } catch (error) {
-    return `Failed to uploadd image, ${error}`
-  }
-}
-
-// Getting the link for the uploaded image
-const getUploadedImage = async (req: Request, res: Response) => {
-  try {
-    const result = await uploadImage(req.body.imagePath)
-    res.send(result)
-  } catch (error) {
-    res.status(500)
-    res.json(`Unable to upload image, ${error}`)
-  }
-}
-
 const imageSearch = async (req: Request, res: Response) => {
   try {
-    const imageURL = await uploadImage(req.body.imagePath)
-
     const axiosConfig = {
       headers: {
         'Ocp-Apim-Subscription-Key': config.msAzureCVKey as string
@@ -82,7 +48,7 @@ const imageSearch = async (req: Request, res: Response) => {
     }
 
     const data = {
-      url: imageURL
+      url: req.body.imageURL
     }
 
     const imageResult = await axios.post(config.MSAzureCVURL as string, data, axiosConfig)
@@ -99,7 +65,6 @@ const imageSearch = async (req: Request, res: Response) => {
 
 const dashboard_routes = (app: Application) => {
   app.get('/email/:to', sendEmail)
-  app.post('/upload', getUploadedImage)
   app.post('/imageSearch', imageSearch)
 }
 
