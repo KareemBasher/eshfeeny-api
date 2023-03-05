@@ -80,8 +80,7 @@ npm start
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/email/:userEmail` | Send an email with a verification code | none | user email |
-| POST  | `/upload/` | Upload an image and get sharable url | `imagePath` | none |
-| POST  | `/imageSearch/` | Get search results for an image | `imagePath` | none |
+| POST  | `/imageSearch/` | Get search results for an image | `imageURL` | none |
 
 ## Requirements
 
@@ -95,6 +94,5 @@ a `.env` file that includes:
 * `SENDGRID_API` SendGrid WebAPI key for sending emails.
 * `SENDGRID_EMAIL` SendGrid Authorized Sender email.
 * `SENDGRID_TEMPLATE_ID` SendGrid email template ID.
-* `IMGBB_API_KEY` imgBB API key for uploading images.
 * `MS_AZURE_CV_KEY` Microsoft Azure Computer Vision API key for image search.
 * `MS_AZURE_CV_URL` Microsoft Azure Computer Vision API endpoint for image search.
