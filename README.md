@@ -63,7 +63,7 @@ npm start
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/products/` | List all products | none | none |
 | GET | `/products/:id`  | Get a specific product | none | product ID |
-| POST | `/products/`  | Add a product | `nameAr`, `nameEn`, `description`, `price`, `volume`(optional), `amount` (optional), `useCases[]`, `activeIngredient[]` (opitonal), `sideEffects[]`, `type[]`, `category[]`, `usage[]`, `warning[]` | none |
+| POST | `/products/`  | Add a product | `nameAr`, `nameEn`, `description`, `price`, `volume`(optional), `amount` (optional), `useCases[]`, `activeIngredient[]` (opitonal), `sideEffects[]`, `type[]`, `category[]`, `usage[]`, `warning[]`, `type`, `brand`, `images[]` | none |
 | PATCH | `/products/:id`  | Edit a product | `nameAr`, `nameEn`, `description`, `price`, `volume`(optional), `amount` (optional), `useCases[]`, `activeIngredient[]` (opitonal), `sideEffects[]`, `type[]`, `category[]`, `usage[]`, `warning[]` | product ID |
 | DELETE | `/products/:id`  | Remove a product | none | product ID |
 | GET  | `/products/category/:category` | Get all products from a certain category | none | category |
