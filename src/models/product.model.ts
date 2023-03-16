@@ -91,6 +91,19 @@ class ProductModel {
       throw new Error(`Unable to delete product with id ${id}, ${error}`)
     }
   }
+
+  async getMany(ids: string[]): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ _id: { $in: ids.map((id) => new ObjectId(id)) } })
+        .toArray()) as unknown as Product[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Unable to get products with ids ${ids}, ${error}`)
+    }
+  }
 }
 
 export default ProductModel

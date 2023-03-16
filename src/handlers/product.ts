@@ -94,6 +94,17 @@ const deleteProduct = async (req: Request, res: Response) => {
   }
 }
 
+const getMany = async (req: Request, res: Response) => {
+  try {
+    const ids = req.params.ids.split('&') as string[]
+    const products = await productModel.getMany(ids)
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product routes
 const product_routes = (app: Application) => {
   app.get('/products', index)
@@ -101,6 +112,7 @@ const product_routes = (app: Application) => {
   app.post('/products', create)
   app.patch('/products/:id', update)
   app.delete('/products/:id', deleteProduct)
+  app.get('/products/getMany/:ids', getMany)
 }
 
 export default product_routes
