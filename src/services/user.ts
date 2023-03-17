@@ -344,8 +344,10 @@ const updateProfile = async (req: Request, res: Response) => {
       req.params.id as string,
       req.body.name,
       req.body.email,
-      req.body.phoneNumber
+      req.body.phoneNumber,
+      req.body.gender
     )
+
     res.json(result)
   } catch (error) {
     res.status(500)

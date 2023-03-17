@@ -460,7 +460,13 @@ class UserServices {
   }
 
   // Update user's name, email, and/or phone number
-  async updateProfile(id: string, name: string, email: string, phone: string): Promise<User> {
+  async updateProfile(
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    gender: string
+  ): Promise<User> {
     try {
       const result = (await db.collection('users').updateOne(
         { _id: new ObjectId(id) },
@@ -468,7 +474,8 @@ class UserServices {
           $set: {
             name: name,
             email: email,
-            phoneNumber: phone
+            phoneNumber: phone,
+            gender: gender
           }
         }
       )) as unknown as User
