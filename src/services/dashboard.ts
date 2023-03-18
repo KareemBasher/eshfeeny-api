@@ -13,7 +13,7 @@ const productServicesModel = new ProductServicesModel()
 // Function to generate random code
 const code = () => Math.floor(1000 + Math.random() * 9000).toString()
 
-export const createEmail = (email: string) => {
+const createEmail = (email: string) => {
   const verificationCode = code() as unknown as string
 
   const msg = {
