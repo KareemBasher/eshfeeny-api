@@ -53,7 +53,7 @@ class UserModel {
   }
 
   // Adding a user
-  async create(user: User): Promise<User> {
+  async create(user: User): Promise<User | string> {
     const passwordHashedUserObj = {
       name: user.name.toLowerCase(),
       password: hashPassowrd(user.password),
@@ -66,6 +66,12 @@ class UserModel {
     }
 
     try {
+      const oldUser = await db.collection('users').findOne({ email: user.email })
+
+      if (oldUser) {
+        return 'User already exists'
+      }
+
       const result = (await db
         .collection('users')
         .insertOne(passwordHashedUserObj)) as unknown as CreateRespone
