@@ -13,11 +13,11 @@ const productServicesModel = new ProductServicesModel()
 // Function to generate random code
 const code = () => Math.floor(1000 + Math.random() * 9000).toString()
 
-const sendEmail = (req: Request, res: Response) => {
+export const createEmail = (email: string) => {
   const verificationCode = code() as unknown as string
 
   const msg = {
-    to: req.params.to as string,
+    to: email,
     from: config.sendgridEmail as string,
     subject: 'تغيير كلمة المرور',
     test: 'test message from sendgrid',
@@ -32,6 +32,15 @@ const sendEmail = (req: Request, res: Response) => {
 
   try {
     sgMail.send(msg)
+    return verificationCode
+  } catch (error) {
+    console.log(`Unable to send email, ${error}`)
+  }
+}
+
+const sendEmail = (req: Request, res: Response) => {
+  try {
+    const verificationCode = createEmail(req.params.to)
     res.send({ code: verificationCode })
   } catch (error) {
     res.status(500)
