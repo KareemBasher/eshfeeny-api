@@ -1,6 +1,7 @@
 import { Application, Request, Response } from 'express'
 import UserModel from '../models/users.model'
 import User from '../types/user.type'
+import { createEmail } from '../services/dashboard'
 
 // Instantiate UserModel class
 const userModel = new UserModel()
@@ -37,8 +38,9 @@ const create = async (req: Request, res: Response) => {
   }
 
   try {
+    const verificationCode = createEmail(req.body.email) as unknown as string
     const user = await userModel.create(userObj)
-    res.json(user)
+    res.json({ user: user, code: verificationCode })
   } catch (error) {
     res.status(500)
     res.json(error)
