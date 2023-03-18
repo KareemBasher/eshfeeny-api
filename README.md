@@ -28,7 +28,7 @@ npm start
 | GET  | `/users/` | List all users | none | none |
 | GET | `/users/:id`  | Get a specific user | none | user ID |
 | GET | `/users/checkEmail/:email`  | Get a specific user using their email | none | user email |
-| POST | `/users/`  | Create a new user and sends verification email | `name`, `password`, `email`, `type` | none |
+| POST | `/users/`  | Create a new user | `name`, `password`, `email`, `type` | none |
 | PATCH | `/users/:id`  | Edit a user | `name`, `password`, `email`, `type` | user ID |
 | DELETE | `/users/:id`  | Remove a user | none | user ID |
 | POST | `/users/verify`  | Verify a user for login | `password`, `email` | none |
