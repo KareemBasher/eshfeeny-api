@@ -37,9 +37,15 @@ class UserModel {
   // Showing a single user using their ID
   async show(id: string): Promise<User> {
     try {
-      const result = (await db
-        .collection('users')
-        .findOne({ _id: new ObjectId(id) })) as unknown as User
+      const result = (
+        await db
+          .collection('users')
+          .find({ _id: new ObjectId(id) })
+          .project({
+            password: 0
+          })
+          .toArray()
+      )[0] as unknown as User
       return result
     } catch (error) {
       throw new Error(`Unable to show user with id ${id}, ${error}`)
@@ -53,11 +59,26 @@ class UserModel {
       password: hashPassowrd(user.password),
       email: user.email.toLowerCase()
     }
+
+    interface CreateRespone {
+      acknowledged: boolean
+      insertedId: ObjectId
+    }
+
     try {
       const result = (await db
         .collection('users')
-        .insertOne(passwordHashedUserObj)) as unknown as User
-      return result
+        .insertOne(passwordHashedUserObj)) as unknown as CreateRespone
+
+      const newUser = (
+        await db
+          .collection('users')
+          .find({ _id: new ObjectId(result.insertedId) })
+          .project({ password: 0 })
+          .toArray()
+      )[0] as unknown as User
+
+      return newUser
     } catch (error) {
       throw new Error(`Unable to create user, ${error}`)
     }
@@ -99,7 +120,9 @@ class UserModel {
   // Check if user exists using their email
   async checkUserEmail(email: string): Promise<User> {
     try {
-      const result = (await db.collection('users').findOne({ email: email })) as unknown as User
+      const result = (
+        await db.collection('users').find({ email: email }).project({ password: 0 }).toArray()
+      )[0] as unknown as User
 
       return result
     } catch (error) {
