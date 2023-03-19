@@ -66,7 +66,7 @@ class UserModel {
     }
 
     try {
-      const oldUser = await db.collection('users').findOne({ email: user.email })
+      const oldUser = await db.collection('users').findOne({ email: user.email.toLowerCase() })
 
       if (oldUser) {
         return 'User already exists'
