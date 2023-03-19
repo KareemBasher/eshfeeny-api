@@ -77,6 +77,7 @@ const deleteUser = async (req: Request, res: Response) => {
 const checkUserEmail = async (req: Request, res: Response) => {
   try {
     const user = await userModel.checkUserEmail(req.params.email)
+    if (!user) res.send(false)
     res.json(user)
   } catch (error) {
     res.status(500)
