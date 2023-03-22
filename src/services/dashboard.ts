@@ -13,7 +13,7 @@ const productServicesModel = new ProductServicesModel()
 // Function to generate random code
 const code = () => Math.floor(1000 + Math.random() * 9000).toString()
 
-const createEmail = (email: string) => {
+const createEmail = async (email: string) => {
   const verificationCode = code() as unknown as string
 
   const msg = {
@@ -31,16 +31,16 @@ const createEmail = (email: string) => {
   }
 
   try {
-    sgMail.send(msg)
+    await sgMail.send(msg)
     return verificationCode
   } catch (error) {
     console.log(`Unable to send email, ${error}`)
   }
 }
 
-const sendEmail = (req: Request, res: Response) => {
+const sendEmail = async (req: Request, res: Response) => {
   try {
-    const verificationCode = createEmail(req.params.to)
+    const verificationCode = await createEmail(req.params.to)
     res.send({ code: verificationCode })
   } catch (error) {
     res.status(500)
