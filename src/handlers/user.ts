@@ -76,7 +76,7 @@ const deleteUser = async (req: Request, res: Response) => {
 
 const checkUserEmail = async (req: Request, res: Response) => {
   try {
-    const user = await userModel.checkUserEmail(req.params.email)
+    const user = await userModel.checkUserEmail(req.body.email as unknown as string)
     if (!user) res.send(false)
     res.json(user)
   } catch (error) {
@@ -92,7 +92,7 @@ const user_routes = (app: Application) => {
   app.post('/users', create)
   app.patch('/users/:id', update)
   app.delete('/users/:id', deleteUser)
-  app.get('/users/checkEmail/:email', checkUserEmail)
+  app.post('/users/checkEmail', checkUserEmail)
 }
 
 export default user_routes
