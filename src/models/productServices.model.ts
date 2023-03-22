@@ -127,9 +127,10 @@ class ProductServicesModel {
 
     try {
       if (user.favorites) {
-        const result = (
-          await db.collection('products').find({ _id: { $in: user?.favorites } })
-        ).toArray() as unknown as Product[]
+        const result = (await db
+          .collection('products')
+          .find({ _id: { $in: user?.favorites } })
+          .toArray()) as unknown as Product[]
         return result
       } else {
         return []
@@ -140,15 +141,20 @@ class ProductServicesModel {
   }
 
   // Show all products that have a certain active ingredient
-  async getAlternative(activeIngredient: string): Promise<Product[]> {
+  async getAlternative(id: string): Promise<Product[]> {
     try {
+      const product = (await db
+        .collection('products')
+        .findOne({ _id: new ObjectId(id) })) as unknown as Product
+
       const result = (await db
         .collection('products')
-        .find({ activeIngredient: activeIngredient })
+        .find({ activeIngredient: product.activeIngredient, _id: { $ne: new ObjectId(id) } })
         .toArray()) as unknown as Product[]
+
       return result
     } catch (error) {
-      throw new Error(`Unable to find products that contain ${activeIngredient}, ${error}`)
+      throw new Error(`Unable to find alternative to ${id}, ${error}`)
     }
   }
 
