@@ -85,6 +85,12 @@ npm start
 | GET  | `/email/:userEmail` | Send an email with a verification code | none | user email |
 | POST  | `/imageSearch/` | Get search results for an image | `imageURL` | none |
 
+### Insurance Companies Routes
+| Route  | Path | Description | Body | Params |
+| ------ | ---- | ----------- | ---- | ------ |
+| GET  | `/insuranceCompanies` | Get all insurance companies | none | none |
+| GET  | `/insuranceCompanies` | Get a certain insurance company using its ID | `imageURL` | insurance company id |
+
 ## Requirements
 
 An environment file is required to run the project.\
