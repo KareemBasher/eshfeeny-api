@@ -19,6 +19,13 @@ interface Alarm {
   days?: string | null
 }
 
+interface InsuranceCard {
+  name: string
+  number: string
+  nameOnCard: string
+  imageURL: string
+}
+
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const hashPassowrd = (password: string) => {
   const salt = parseInt(config.salt as string)
@@ -501,6 +508,45 @@ class UserServices {
       return result
     } catch (error) {
       throw new Error(`Could not update password for user with id ${id} ${error}`)
+    }
+  }
+
+  // Add insurance card for a user
+  async addInsuranceCard(id: string, insuranceCard: InsuranceCard): Promise<User> {
+    try {
+      const result = (await db.collection('users').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            insuranceCards: insuranceCard
+          }
+        }
+      )) as unknown as User
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add insurance card for user with id ${id} ${error}`)
+    }
+  }
+
+  // Get insurance cards for a user
+  async getInsuranceCards(id: string): Promise<InsuranceCard[]> {
+    try {
+      const result = (
+        await db
+          .collection('users')
+          .find({ _id: new ObjectId(id) })
+          .project({ insuranceCards: 1, _id: 0 })
+          .toArray()
+      )[0] as unknown as User
+
+      if (result.insuranceCards) {
+        return result.insuranceCards
+      } else {
+        return []
+      }
+    } catch (error) {
+      throw new Error(`Could not get insurance cards for user with id ${id} ${error}`)
     }
   }
 }

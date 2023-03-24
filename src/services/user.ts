@@ -369,6 +369,31 @@ const updatePassword = async (req: Request, res: Response) => {
   }
 }
 
+// Add an insurance card for a user
+const addInsuranceCard = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.addInsuranceCard(
+      req.params.id as string,
+      req.body.insuranceCard
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Get all insurance cards for a user
+const getInsuranceCards = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.getInsuranceCards(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // UserServices routes
 const userServices_routes = (app: Application) => {
   app.post('/users/verify', verify)
@@ -396,6 +421,8 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/cart/:productId/-1', decrementCartItem)
   app.patch('/users/:id/profile', updateProfile)
   app.patch('/users/:id/password', updatePassword)
+  app.patch('/users/:id/insuranceCards', addInsuranceCard)
+  app.get('/users/:id/insuranceCards', getInsuranceCards)
 }
 
 export default userServices_routes

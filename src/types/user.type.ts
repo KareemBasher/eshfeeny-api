@@ -19,6 +19,13 @@ interface cart {
   quantity: number
 }
 
+interface InsuranceCard {
+  name: string
+  number: string
+  nameOnCard: string
+  imageURL: string
+}
+
 type User = {
   id?: ObjectId
   name: string
@@ -34,6 +41,7 @@ type User = {
   favorites?: ObjectId[] | null
   orderHistory?: OrderHistory[] | null
   cart?: cart[] | null
+  insuranceCards?: InsuranceCard[] | null
 }
 
 export default User
