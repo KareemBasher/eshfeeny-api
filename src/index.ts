@@ -8,6 +8,7 @@ import user_routes from './handlers/user'
 import userServices_routes from './services/user'
 import productServices_routes from './services/product'
 import dashboard_routes from './services/dashboard'
+import insuranceCompanies_routes from './handlers/insuranceCompany'
 
 const PORT = config.port
 // create an instance server
@@ -27,5 +28,6 @@ productServices_routes(app)
 user_routes(app)
 userServices_routes(app)
 dashboard_routes(app)
+insuranceCompanies_routes(app)
 
 export default app
