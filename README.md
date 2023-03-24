@@ -86,6 +86,7 @@ npm start
 | POST  | `/imageSearch/` | Get search results for an image | `imageURL` | none |
 
 ### Insurance Companies Routes
+
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/insuranceCompanies` | Get all insurance companies | none | none |
