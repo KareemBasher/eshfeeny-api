@@ -63,9 +63,16 @@ const imageSearch = async (req: Request, res: Response) => {
     const imageResult = await axios.post(config.MSAzureCVURL as string, data, axiosConfig)
     const imageContent = imageResult.data.readResult.content
 
-    const searchResults = await productServicesModel.search(imageContent)
-
-    res.send(searchResults)
+    if (imageContent) {
+      const searchResults = await productServicesModel.search(imageContent)
+      if (searchResults.length > 0) {
+        res.send(searchResults)
+      } else {
+        res.send(false)
+      }
+    } else {
+      res.send(false)
+    }
   } catch (error) {
     res.status(500)
     res.json(`Unable to search for image, ${error}`)
