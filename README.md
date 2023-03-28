@@ -90,7 +90,19 @@ npm start
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/insuranceCompanies` | Get all insurance companies | none | none |
-| GET  | `/insuranceCompanies` | Get a certain insurance company using its ID | `imageURL` | insurance company id |
+| GET  | `/insuranceCompanies` | Get a certain insurance company using its ID | `imageURL` | insurance
+company id |
+
+### Pharmacy Routes
+
+| Route  | Path | Description | Body | Params |
+| ------ | ---- | ----------- | ---- | ------ |
+| GET  | `/pharmacies/` | List all pharmacies | none | none |
+| GET | `/pharmacies/:id`  | Get a specific pharmacy using an ID | none | pharmacy ID |
+| POST | `/pharmacies/checkEmail`  | Get a specific pharmacy using their email | `email` | none |
+| POST | `/pharmacies/`  | Create a new pharmacy | `name`, `password`, `email` | none |
+| PATCH | `/pharmacies/:id`  | Edit a pharmacy | `name`, `password`, `email` | pharmacy ID |
+| DELETE | `/pharmacies/:id`  | Remove a pharmacy | none | pharmacy ID |
 
 ## Requirements
 
