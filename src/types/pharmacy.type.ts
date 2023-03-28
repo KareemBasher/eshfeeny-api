@@ -11,8 +11,8 @@ type Pharmacy = {
   name: string
   email: string
   password: string
-  phoneNumber: string
-  orders: Orders[]
+  phoneNumber?: string
+  orders?: Orders[]
 }
 
 export default Pharmacy
