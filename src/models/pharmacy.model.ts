@@ -88,7 +88,7 @@ class PharmacyModel {
           $set: {
             name: pharmacy.name,
             email: pharmacy.email.toLowerCase(),
-            phoneNumber: hashPassowrd(pharmacy.password)
+            password: hashPassowrd(pharmacy.password)
           }
         }
       )) as unknown as Pharmacy
