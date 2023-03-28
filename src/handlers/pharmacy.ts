@@ -76,6 +76,7 @@ const deletedPharmacy = async (req: Request, res: Response) => {
 const showByEmail = async (req: Request, res: Response) => {
   try {
     const pharmacy = await pharmacyModel.showByEmail(req.body.email)
+    if (!pharmacy) res.send(false)
     res.json(pharmacy)
   } catch (error) {
     res.status(500)
