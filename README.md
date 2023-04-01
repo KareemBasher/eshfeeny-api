@@ -104,6 +104,7 @@ company id |
 | PATCH | `/pharmacies/:id`  | Edit a pharmacy | `name`, `password`, `email` | pharmacy ID |
 | DELETE | `/pharmacies/:id`  | Remove a pharmacy | none | pharmacy ID |
 | POST | `/pharmacies/verify`  | Verify pharmacy's data for login | `email`, `password` | none |
+| PATCH | `/pharmacies/:id/profile`  | Update pharmacies profile data | `email`, `name`, `phoneNumber` | none |
 
 ## Requirements
 
