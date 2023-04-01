@@ -42,6 +42,44 @@ class PharmacyServices {
       throw new Error(`Could not retrieve user email ${error}`)
     }
   }
+
+  // Update pharmacy's name, email, and/or phone number
+  async updateProfile(id: string, name: string, email: string, phone: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            name: name,
+            email: email,
+            phoneNumber: phone
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update profile for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Update pharmacy's password
+  async updatePassword(id: string, password: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $set: {
+            password: hashPassowrd(password)
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update password for pharmacy with id ${id} ${error}`)
+    }
+  }
 }
 
 export default PharmacyServices
