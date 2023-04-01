@@ -2,10 +2,10 @@ import { Application, Request, Response } from 'express'
 import PharmacyServicesModel from '../models/pharmacyServices.model'
 import { ObjectId } from 'mongodb'
 
-// Instantiate UserModel class
+// Instantiate PharmacyServicesModel class
 const pharmacyServicesModel = new PharmacyServicesModel()
 
-// Verifying user for login
+// Verifying pharmacy for login
 const verify = async (req: Request, res: Response) => {
   try {
     const result = await pharmacyServicesModel.verifyLogin(
@@ -20,8 +20,41 @@ const verify = async (req: Request, res: Response) => {
   }
 }
 
+// Update pharmacy's name, email, and/or phone number
+const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.updateProfile(
+      req.params.id as string,
+      req.body.name,
+      req.body.email,
+      req.body.phoneNumber
+    )
+
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Update pharmacy's password
+const updatePassword = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.updatePassword(
+      req.params.id as string,
+      req.body.password as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
+  app.patch('/pharmacies/:id/profile', updateProfile)
+  app.patch('/pharmacies/:id/password', updatePassword)
 }
 
 export default pharmacyServices_routes
