@@ -1,6 +1,5 @@
 import { Application, Request, Response } from 'express'
 import PharmacyServicesModel from '../models/pharmacyServices.model'
-import { ObjectId } from 'mongodb'
 
 // Instantiate PharmacyServicesModel class
 const pharmacyServicesModel = new PharmacyServicesModel()
