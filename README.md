@@ -103,6 +103,7 @@ company id |
 | POST | `/pharmacies/`  | Create a new pharmacy | `name`, `password`, `email` | none |
 | PATCH | `/pharmacies/:id`  | Edit a pharmacy | `name`, `password`, `email` | pharmacy ID |
 | DELETE | `/pharmacies/:id`  | Remove a pharmacy | none | pharmacy ID |
+| POST | `/pharmacies/verify`  | Verify pharmacy's data for login | `email`, `password` | none |
 
 ## Requirements
 
