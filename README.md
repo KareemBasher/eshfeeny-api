@@ -106,7 +106,7 @@ company id |
 | POST | `/pharmacies/verify`  | Verify pharmacy's data for login | `email`, `password` | none |
 | PATCH | `/pharmacies/:id/profile`  | Update pharmacy's profile data | `email`, `name`, `phoneNumber` | none |
 | PATCH | `/pharmacies/:id/password`  | Update pharmacy's password | `email`, `password` | none |
-| POST | `/pharmacies/available`  | Get all pharmacies that have a list of certain products | `products (string array of ids)| none |
+| POST | `/pharmacies/available`  | Get all pharmacies that have a list of certain products | `products` (string array of ids)| none |
 
 ## Requirements
 
