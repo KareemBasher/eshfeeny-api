@@ -6,6 +6,10 @@ interface Orders {
   quantity: number
 }
 
+interface Product {
+  _id: string
+}
+
 type Pharmacy = {
   _id?: ObjectId
   name: string
@@ -13,7 +17,7 @@ type Pharmacy = {
   password: string
   phoneNumber?: string
   orders?: Orders[]
-  products?: ObjectId[]
+  products?: Product[]
 }
 
 export default Pharmacy
