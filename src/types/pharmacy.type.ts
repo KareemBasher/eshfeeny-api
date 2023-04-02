@@ -13,6 +13,7 @@ type Pharmacy = {
   password: string
   phoneNumber?: string
   orders?: Orders[]
+  products?: ObjectId[]
 }
 
 export default Pharmacy
