@@ -80,6 +80,21 @@ class PharmacyServices {
       throw new Error(`Could not update password for pharmacy with id ${id} ${error}`)
     }
   }
+
+  // Get pharmacies that have a list of products
+  async getpharmacies(products: string[]): Promise<Pharmacy[]> {
+    try {
+      const result = (await db
+        .collection('pharmacies')
+        .find({ 'products._id': { $all: products } })
+        .project({ password: 0, products: 0 })
+        .toArray()) as unknown as Pharmacy[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not retrieve pharmacies ${error}`)
+    }
+  }
 }
 
 export default PharmacyServices
