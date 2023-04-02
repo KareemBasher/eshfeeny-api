@@ -50,10 +50,21 @@ const updatePassword = async (req: Request, res: Response) => {
   }
 }
 
+const getpharmacies = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.getpharmacies(req.body.products)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
   app.patch('/pharmacies/:id/password', updatePassword)
+  app.post('/pharmacies/available', getpharmacies)
 }
 
 export default pharmacyServices_routes
