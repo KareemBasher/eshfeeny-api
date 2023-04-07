@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "nodemon ./src/index.ts",
     "clean": "rimraf build/",
-    "build": "npx tsc",
-    "start": "npm run build && node build/index.js",
+    "build": "npm run clean && npx tsc",
+    "start": "npm run build && nodemon build/index.js",
     "deploy": "npm run build && node build/index.js",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
     "lint": "eslint . --ext .ts"
