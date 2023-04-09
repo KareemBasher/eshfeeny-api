@@ -7,6 +7,12 @@
             "config": { "includeFiles": ["build/**"] }
         }
     ],
+    "rewrites": [
+        {
+            "src": "/(.*)",
+            "dest": "build/index.js"
+        }
+    ],
     "headers": [
     {
       "source": "/(.*)",
