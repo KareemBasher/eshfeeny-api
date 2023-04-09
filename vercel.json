@@ -4,6 +4,6 @@
     { "src": "/(.*)", "dest": "/" }
   ],
   "scripts": {
-    "start": "npm deploy"
+    "start": "npm run deploy"
   }
 }
