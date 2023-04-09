@@ -9,7 +9,6 @@
     ],
     "rewrites": [
         {
-            "src": "/(.*)",
             "dest": "build/index.js"
         }
     ],
