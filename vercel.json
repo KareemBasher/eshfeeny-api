@@ -2,5 +2,8 @@
   "version": 2,
   "routes": [
     { "src": "/(.*)", "dest": "/" }
-  ]
+  ],
+  "scripts": {
+    "start": "npm run deploy"
+  }
 }
