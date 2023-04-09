@@ -5,8 +5,5 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "/" }
-  ],
-  "scripts": {
-    "start": "npm run deploy"
-  }
+  ]
 }
