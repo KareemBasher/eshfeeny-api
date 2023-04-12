@@ -8,8 +8,6 @@
     "build": "npm run clean && npx tsc",
     "start": "npm run build && nodemon build/index.js",
     "deploy": "npm run build && node build/index.js",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add build",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
     "lint": "eslint . --ext .ts"
   },
