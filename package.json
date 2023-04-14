@@ -2,11 +2,14 @@
   "name": "eshfeeny-api",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "16.14.0"
+  },
   "scripts": {
     "dev": "nodemon ./src/index.ts",
     "clean": "rimraf build/",
     "build": "npm run clean && npx tsc",
-    "start": "npm run build && node build/index.js",
+    "start": "node build/index.js",
     "deploy": "npm run build && node build/index.js",
     "format": "prettier --write 'src/**/*.{ts,tsx,js,jsx}'",
     "lint": "eslint . --ext .ts"
