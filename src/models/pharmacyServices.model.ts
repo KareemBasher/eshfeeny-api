@@ -44,7 +44,13 @@ class PharmacyServices {
   }
 
   // Update pharmacy's name, email, and/or phone number
-  async updateProfile(id: string, name: string, email: string, phone: string): Promise<Pharmacy> {
+  async updateProfile(
+    id: string,
+    name: string,
+    email: string,
+    phone: string,
+    address: string
+  ): Promise<Pharmacy> {
     try {
       const result = (await db.collection('pharmacies').updateOne(
         { _id: new ObjectId(id) },
@@ -52,7 +58,8 @@ class PharmacyServices {
           $set: {
             name: name,
             email: email,
-            phoneNumber: phone
+            phoneNumber: phone,
+            address: address
           }
         }
       )) as unknown as Pharmacy

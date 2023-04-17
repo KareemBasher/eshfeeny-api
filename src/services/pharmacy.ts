@@ -26,7 +26,8 @@ const updateProfile = async (req: Request, res: Response) => {
       req.params.id as string,
       req.body.name,
       req.body.email,
-      req.body.phoneNumber
+      req.body.phoneNumber,
+      req.body.address
     )
 
     res.json(result)
