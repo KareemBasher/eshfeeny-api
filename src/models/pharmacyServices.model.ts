@@ -3,6 +3,7 @@ import Pharmacy from '../types/pharmacy.type'
 import { Db, ObjectId } from 'mongodb'
 import bcrypt from 'bcrypt'
 import config from '../config'
+import Product from '../types/product.type'
 
 // Function that gets passed a plain text passowrd and returns a hashed password using bcrypt
 const hashPassowrd = (password: string) => {
@@ -144,6 +145,112 @@ class PharmacyServices {
         {
           $pull: {
             favorites: new ObjectId(productId)
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove favorite product for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Getting all cart items from a pharmacy
+  async getCartItems(id: string): Promise<Pharmacy[]> {
+    try {
+      const result = (
+        await db
+          .collection('pharmacies')
+          .find({ _id: new ObjectId(id) })
+          .project({ cart: 1, _id: 0 })
+          .toArray()
+      )[0] as unknown as Pharmacy[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get cart items for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Updating cart items for a pharmacy using their ID
+  async updateCartItems(id: string, productId: string): Promise<Pharmacy> {
+    // Getting the item from the products collection
+    let product: Product
+
+    try {
+      product = (await db
+        .collection('products')
+        .findOne({ _id: new ObjectId(productId) })) as unknown as Product
+    } catch (error) {
+      throw new Error(`Could not get product with id ${productId} ${error}`)
+    }
+    const cartIem = {
+      product: product,
+      quantity: 1
+    }
+
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            cart: cartIem
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update cart items for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Increment cart items quantity for a pharmacy using their ID
+  async incrementCartItem(id: string, productId: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id), 'cart.product._id': new ObjectId(productId) },
+        {
+          $inc: {
+            'cart.$.quantity': 1
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not increment cart items for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Decrement cart items quantity for a pharmacy using their ID
+  async decrementCartItem(id: string, productId: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id), 'cart.product._id': new ObjectId(productId) },
+        {
+          $inc: {
+            'cart.$.quantity': -1
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not decrement cart items for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Removing cart items for a pharmacy using their ID
+  async removeCartItem(id: string, productId: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            cart: {
+              'product._id': new ObjectId(productId)
+            }
           }
         }
       )) as unknown as Pharmacy

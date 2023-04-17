@@ -101,6 +101,73 @@ const removeFavoriteProduct = async (req: Request, res: Response) => {
   }
 }
 
+// Getting all cart items from a pharmacy
+const getCartItems = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.getCartItems(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Updating cart items for a pharmacy using their ID
+const addCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.updateCartItems(
+      req.params.id as string,
+      req.body.productId
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Removing favorite product for a pharmacy using their ID
+const removeCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.removeCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Incrementing the quantity of a product in the cart for a pharmacy
+const incrementCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.incrementCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Decrementing the quantity of a product in the cart for a pharmacy
+const decrementCartItem = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.decrementCartItem(
+      req.params.id as string,
+      req.params.productId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
@@ -109,6 +176,11 @@ const pharmacyServices_routes = (app: Application) => {
   app.get('/pharmacies/:id/favorites', getFavorites)
   app.patch('/pharmacies/:id/favorites', addFavoriteProduct)
   app.delete('/pharmacies/:id/favorites/:productId', removeFavoriteProduct)
+  app.get('/pharmacies/:id/cart', getCartItems)
+  app.patch('/pharmacies/:id/cart', addCartItem)
+  app.delete('/pharmacies/:id/cart/:productId', removeCartItem)
+  app.patch('/pharmacies/:id/cart/:productId/1', incrementCartItem)
+  app.patch('/pharmacies/:id/cart/:productId/-1', decrementCartItem)
 }
 
 export default pharmacyServices_routes
