@@ -110,6 +110,11 @@ company id |
 | GET  | `/pharmacies/:id/favorites` | Get all favorite products for a pharmacy | none | pharmacy ID |
 | PATCH  | `/pharmacies/:id/favorites` | Add a favorite product | `productId` | none |
 | DELETE  | `pharmacies/:id/favorites/:productId` | List all pharmacies | none | pharmacy ID, product ID |
+| GET | `/pharmacies/:id/cart`  | Get all cart items | none | pharmacy ID |
+| PATCH | `/pharmacies/:id/cart`  | Add cart item | `productId` | pharmacy ID |
+| DELETE | `/pharmacies/:id/cart/:productId`  | Remove a cart item | none | pharmacy ID, product ID |
+| PATCH | `/pharmacies/:id/cart/:productId/1`  | Increment a cart item | none | pharmacy ID, product ID |
+| PATCH | `/pharmacies/:id/cart/:productId/-1`  | Decrement a cart item | none | pharmacy ID, product ID | |
 
 ## Requirements
 
