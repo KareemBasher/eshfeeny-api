@@ -104,9 +104,12 @@ company id |
 | PATCH | `/pharmacies/:id`  | Edit a pharmacy | `name`, `password`, `email` | pharmacy ID |
 | DELETE | `/pharmacies/:id`  | Remove a pharmacy | none | pharmacy ID |
 | POST | `/pharmacies/verify`  | Verify pharmacy's data for login | `email`, `password` | none |
-| PATCH | `/pharmacies/:id/profile`  | Update pharmacy's profile data | `email`, `name`, `phoneNumber` | none |
+| PATCH | `/pharmacies/:id/profile`  | Update pharmacy's profile data | `email`, `name`, `phoneNumber`, `address` | none |
 | PATCH | `/pharmacies/:id/password`  | Update pharmacy's password | `email`, `password` | none |
 | POST | `/pharmacies/available`  | Get all pharmacies that have a list of certain products | `products` (string array of ids)| none |
+| GET  | `/pharmacies/:id/favorites` | Get all favorite products for a pharmacy | none | pharmacy ID |
+| PATCH  | `/pharmacies/:id/favorites` | Add a favorite product | `productId` | none |
+| DELETE  | `pharmacies/:id/favorites/:productId` | List all pharmacies | none | pharmacy ID, product ID |
 
 ## Requirements
 
