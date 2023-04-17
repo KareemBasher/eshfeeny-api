@@ -32,9 +32,7 @@ const create = async (req: Request, res: Response) => {
   const pharmacyObj: Pharmacy = {
     name: req.body.name,
     password: req.body.password,
-    email: req.body.email,
-    cart: [],
-    favorites: []
+    email: req.body.email
   }
 
   try {

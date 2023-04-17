@@ -59,7 +59,9 @@ class PharmacyModel {
     const passwordHashedObj = {
       name: pharmacy.name.toLowerCase(),
       password: hashPassowrd(pharmacy.password),
-      email: pharmacy.email.toLowerCase()
+      email: pharmacy.email.toLowerCase(),
+      cart: [],
+      favorites: []
     }
 
     try {
