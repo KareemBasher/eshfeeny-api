@@ -89,7 +89,7 @@ class PharmacyServices {
   }
 
   // Get pharmacies that have a list of products
-  async getpharmacies(products: string[]): Promise<Pharmacy[]> {
+  async getPharmacies(products: string[]): Promise<Pharmacy[]> {
     try {
       const result = (await db
         .collection('pharmacies')
@@ -100,6 +100,57 @@ class PharmacyServices {
       return result
     } catch (error) {
       throw new Error(`Could not retrieve pharmacies ${error}`)
+    }
+  }
+
+  // Getting all favorite products from a pharmacy
+  async getFavorites(id: string): Promise<Pharmacy[]> {
+    try {
+      const result = (await db
+        .collection('pharmacies')
+        .find({ _id: new ObjectId(id) })
+        .project({ favorites: 1 })
+        .toArray()) as unknown as Pharmacy[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get favorite products for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Updating favorite products for a pharmacy using their ID
+  async updateFavorites(id: string, productId: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            favorites: new ObjectId(productId)
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not update favorite products for pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Removing favorite product for a pharmacy using their ID
+  async removeFavorites(id: string, productId: string): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            favorites: new ObjectId(productId)
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove favorite product for pharmacy with id ${id} ${error}`)
     }
   }
 }

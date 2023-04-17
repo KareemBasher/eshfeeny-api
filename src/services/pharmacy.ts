@@ -51,9 +51,49 @@ const updatePassword = async (req: Request, res: Response) => {
   }
 }
 
-const getpharmacies = async (req: Request, res: Response) => {
+// Getting all pharmacies that have the products requested
+const getPharmacies = async (req: Request, res: Response) => {
   try {
-    const result = await pharmacyServicesModel.getpharmacies(req.body.products)
+    const result = await pharmacyServicesModel.getPharmacies(req.body.products)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Getting all favorites from a pharmacy
+const getFavorites = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.getFavorites(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Updating favorite product for a pharmacy using their ID
+const addFavoriteProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.updateFavorites(
+      req.params.id as string,
+      req.body.productId
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Removing favorite product for a pharmacy using their ID
+const removeFavoriteProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.removeFavorites(
+      req.params.id as string,
+      req.params.productId as string
+    )
     res.json(result)
   } catch (error) {
     res.status(500)
@@ -65,7 +105,10 @@ const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
   app.patch('/pharmacies/:id/password', updatePassword)
-  app.post('/pharmacies/available', getpharmacies)
+  app.post('/pharmacies/available', getPharmacies)
+  app.get('/pharmacies/:id/favorites', getFavorites)
+  app.patch('/pharmacies/:id/favorites', addFavoriteProduct)
+  app.delete('/pharmacies/:id/favorites/:productId', removeFavoriteProduct)
 }
 
 export default pharmacyServices_routes
