@@ -57,7 +57,9 @@ class UserModel {
     const passwordHashedUserObj = {
       name: user.name.toLowerCase(),
       password: hashPassowrd(user.password),
-      email: user.email.toLowerCase()
+      email: user.email.toLowerCase(),
+      cart: [],
+      favorites: []
     }
 
     interface CreateRespone {
