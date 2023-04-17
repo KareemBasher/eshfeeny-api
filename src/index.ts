@@ -25,6 +25,10 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port: ${PORT}`)
 })
 
+app.get('/', (req, res) => {
+  res.send('Hello, World!')
+})
+
 product_routes(app)
 productServices_routes(app)
 user_routes(app)
