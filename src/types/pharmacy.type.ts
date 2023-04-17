@@ -15,6 +15,11 @@ interface GeoLocation {
   lng: number
 }
 
+interface cart {
+  product: Product
+  quantity: number
+}
+
 type Pharmacy = {
   _id?: ObjectId
   name: string
@@ -25,6 +30,8 @@ type Pharmacy = {
   products?: Product[]
   geoLocation?: GeoLocation
   address?: string
+  cart?: cart[] | null
+  favorites?: ObjectId[] | null
 }
 
 export default Pharmacy
