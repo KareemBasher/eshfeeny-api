@@ -493,6 +493,39 @@ class UserServices {
     }
   }
 
+  // Compare and update user's password
+  async compareAndUpdate(
+    id: string,
+    newPassword: string,
+    oldPassword: string
+  ): Promise<User | string> {
+    try {
+      const user = (await db
+        .collection('users')
+        .findOne({ _id: new ObjectId(id) })) as unknown as User
+
+      const oldPasswordDb = user.password
+
+      const isMatch = comparePassword(oldPassword, oldPasswordDb)
+
+      if (!isMatch) {
+        return 'Password mismatch'
+      } else {
+        const result = (await db.collection('users').updateOne(
+          { _id: new ObjectId(id) },
+          {
+            $set: {
+              password: hashPassowrd(newPassword)
+            }
+          }
+        )) as unknown as User
+        return result
+      }
+    } catch (error) {
+      throw new Error(`Could not update password for user with id ${id} ${error}`)
+    }
+  }
+
   // Update user's password
   async updatePassword(id: string, password: string): Promise<User> {
     try {

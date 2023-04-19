@@ -355,6 +355,21 @@ const updateProfile = async (req: Request, res: Response) => {
   }
 }
 
+// Compare and update user's password
+const compareAndUpdate = async (req: Request, res: Response) => {
+  try {
+    const result = await userServicesModel.compareAndUpdate(
+      req.params.id as string,
+      req.body.newPassword,
+      req.body.oldPassword
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Update user's password
 const updatePassword = async (req: Request, res: Response) => {
   try {
@@ -423,6 +438,7 @@ const userServices_routes = (app: Application) => {
   app.patch('/users/:id/password', updatePassword)
   app.patch('/users/:id/insuranceCards', addInsuranceCard)
   app.get('/users/:id/insuranceCards', getInsuranceCards)
+  app.patch('/users/:id/compareAndUpdate', compareAndUpdate)
 }
 
 export default userServices_routes
