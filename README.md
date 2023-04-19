@@ -56,6 +56,7 @@ npm start
 | PATCH | `/users/:id/cart/:productId/-1`  | Decrement the quantity of a cart item | none | user ID, productId |
 | PATCH | `/users/:id/profile`  | Update a user's name, email, and/or phone number | `name`, `email`, `phoneNumber` | user ID |
 | PATCH | `/users/:id/password`  | Update a user's password | `password` | user ID |
+| PATCH | `/users/:id/compareAndUpdate`  | Compare and update a user's password | `newPassword`, `oldPassword` | user ID |
 | PATCH | `/users/:id/insuranceCards`  | Add an insurance card to a user | `insuranceCard` object containing `name`, `number`, `nameOnCard`, `imageURL` | user ID |
 | GET | `/users/:id/insuranceCards`  | Get all users's insurance cards | none | user ID |
 
