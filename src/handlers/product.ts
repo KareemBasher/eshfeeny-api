@@ -29,26 +29,8 @@ const show = async (req: Request, res: Response) => {
 
 // Add a product
 const create = async (req: Request, res: Response) => {
-  const productObj: Product = {
-    nameAr: req.body.nameAr,
-    nameEn: req.body.nameEn,
-    description: req.body.description,
-    price: req.body.price,
-    volume: req.body.volume,
-    amount: req.body.amount,
-    useCases: req.body.useCases,
-    activeIngredient: req.body.activeIngredient,
-    sideEffects: req.body.sideEffects,
-    type: req.body.type,
-    category: req.body.category,
-    usage: req.body.usage,
-    warning: req.body.warning,
-    brand: req.body.brand,
-    images: req.body.images
-  }
-
   try {
-    const product = await productModel.create(productObj)
+    const product = await productModel.create(req.body.product as Product)
     res.json(product)
   } catch (error) {
     res.status(500)
