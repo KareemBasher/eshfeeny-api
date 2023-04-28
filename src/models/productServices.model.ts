@@ -230,7 +230,7 @@ class ProductServicesModel {
           { $unwind: '$brand' },
           {
             $group: {
-              _id: { $toLower: '$brand' },
+              _id: '$brand',
               count: { $sum: 1 }
             }
           },
