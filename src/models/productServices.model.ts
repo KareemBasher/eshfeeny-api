@@ -16,6 +16,12 @@ connectToDb((error) => {
   }
 })
 
+// Interface for the result of getBrandCounts
+interface getBrandCountsResult {
+  _id: string
+  count: number
+}
+
 // Product servicecs class
 class ProductServicesModel {
   // Show all products from a certain category
@@ -206,6 +212,41 @@ class ProductServicesModel {
       return result
     } catch (error) {
       throw new Error(`Unable to find products from brand ${brand}, ${error}`)
+    }
+  }
+
+  // Get all the brands and their counts for a certain category
+  async getBrandCounts(category_type: string, value: string): Promise<getBrandCountsResult[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .aggregate([
+          {
+            $match: {
+              [category_type]: value,
+              brand: { $not: { $size: 0 }, $nin: ['الادوية', 'الأدوية'] }
+            }
+          },
+          { $unwind: '$brand' },
+          {
+            $group: {
+              _id: { $toLower: '$brand' },
+              count: { $sum: 1 }
+            }
+          },
+          {
+            $match: {
+              count: { $gte: 1 }
+            }
+          },
+          { $sort: { count: -1 } },
+          { $limit: 100 }
+        ])
+        .toArray()) as unknown as getBrandCountsResult[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find brands from ${category_type}, ${error}`)
     }
   }
 }
