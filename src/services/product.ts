@@ -98,6 +98,17 @@ const getBrand = async (req: Request, res: Response) => {
   }
 }
 
+// Get all the brands from certain brands
+const getBrands = async (req: Request, res: Response) => {
+  try {
+    const brands = await productServicesModel.getBrands(req.body.brands as string[])
+    res.json(brands)
+  } catch (error) {
+    res.json(error)
+    res.status(500)
+  }
+}
+
 // Get all the brands and their counts for a certain category
 const getBrandCounts = async (req: Request, res: Response) => {
   try {
@@ -122,6 +133,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/type/:type', getType)
   app.get('/products/user/:userId/cart/:productId', checkCart)
   app.get('/products/brand/:brand', getBrand)
+  app.post('/products/brand/collective/brands', getBrands)
   app.get('/products/brandCounts/:category_type/:value', getBrandCounts)
 }
 

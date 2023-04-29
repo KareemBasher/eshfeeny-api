@@ -215,6 +215,19 @@ class ProductServicesModel {
     }
   }
 
+  // Show all products from a certain brands
+  async getBrands(brands: string[]): Promise<Product[]> {
+    try {
+      const result = (await db
+        .collection('products')
+        .find({ brand: { $in: brands } })
+        .toArray()) as unknown as Product[]
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from brands ${brands}, ${error}`)
+    }
+  }
+
   // Get all the brands and their counts for a certain category
   async getBrandCounts(category_type: string, value: string): Promise<getBrandCountsResult[]> {
     try {
