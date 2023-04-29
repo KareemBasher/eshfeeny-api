@@ -72,6 +72,7 @@ npm start
 | DELETE | `/products/:id`  | Remove a product | none | product ID |
 | GET  | `/products/category/:category` | Get all products from a certain category | none | category |
 | GET  | `/products/brand/:brand` | Get all products from a certain brand | none | brand |
+| POST  | `/products/brand/collective/brands` | Get all products from certain brands | `brands` (string array) | brand |
 | GET  | `/products/search/:query` | Search for a product using a query (has autocomplete) | none | query |
 | GET  | `/products/user/:userId/orderHistory/:orderHistoryId` | Get all products from a user's order history | none | user ID, order ID |
 | GET  | `/products/user/:userId/favorites` | Get all user favorite products | none | user ID |
