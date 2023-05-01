@@ -111,13 +111,14 @@ company id |
 | PATCH | `/pharmacies/:id/password`  | Update pharmacy's password | `email`, `password` | none |
 | POST | `/pharmacies/available`  | Get all pharmacies that have a list of certain products | `products` (string array of ids)| none |
 | GET  | `/pharmacies/:id/favorites` | Get all favorite products for a pharmacy | none | pharmacy ID |
-| PATCH  | `/pharmacies/:id/favorites` | Add a favorite product | `productId` | none |
+| PATCH  | `/pharmacies/:id/favorites` | Add a favorite product | `productId` | pharmacy ID |
 | DELETE  | `pharmacies/:id/favorites/:productId` | List all pharmacies | none | pharmacy ID, product ID |
 | GET | `/pharmacies/:id/cart`  | Get all cart items | none | pharmacy ID |
 | PATCH | `/pharmacies/:id/cart`  | Add cart item | `productId` | pharmacy ID |
 | DELETE | `/pharmacies/:id/cart/:productId`  | Remove a cart item | none | pharmacy ID, product ID |
 | PATCH | `/pharmacies/:id/cart/:productId/1`  | Increment a cart item | none | pharmacy ID, product ID |
 | PATCH | `/pharmacies/:id/cart/:productId/-1`  | Decrement a cart item | none | pharmacy ID, product ID | |
+| PATCH  | `/pharmacies/:id/addProduct` | Add a product to inventory | `id`, `quantity` | pharmacy ID |
 
 ## Requirements
 
