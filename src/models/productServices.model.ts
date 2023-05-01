@@ -231,6 +231,31 @@ class ProductServicesModel {
     }
   }
 
+  // Get cart items from pharmacy (ids and quantity)
+  async checkCartPharmacy(pharmacyId: string, productId: string): Promise<boolean | number> {
+    try {
+      const result = (await db.collection('pharmacies').findOne({
+        _id: new ObjectId(pharmacyId)
+      })) as unknown as User
+
+      let quantity = 0
+
+      if (result.cart) {
+        result.cart?.forEach((item) => {
+          const id = item.product._id ?? new ObjectId()
+          if (id.equals(new ObjectId(productId))) {
+            quantity = item.quantity
+          }
+        })
+      }
+
+      return quantity
+    } catch (error) {
+      console.log(error)
+      throw new Error(`Unable to find products from cart for pharmacy ${pharmacyId}, ${error}`)
+    }
+  }
+
   // Show all products from a certain brand
   async getBrand(brand: string): Promise<Product[]> {
     try {

@@ -100,6 +100,20 @@ const checkCart = async (req: Request, res: Response) => {
   }
 }
 
+// Get cart items from pharmacy (ids and quantity)
+const checkCartPharmacy = async (req: Request, res: Response) => {
+  try {
+    const user = await productServicesModel.checkCartPharmacy(
+      req.params.pharmacyId as string,
+      req.params.productId as string
+    )
+    res.json(user)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Showing all products from a certain brand
 const getBrand = async (req: Request, res: Response) => {
   try {
@@ -157,6 +171,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/alternatives/:activeIngredient', getAlternative)
   app.get('/products/type/:type', getType)
   app.get('/products/user/:userId/cart/:productId', checkCart)
+  app.get('/products/pharmacy/:pharmacyId/cart/:productId', checkCartPharmacy)
   app.get('/products/brand/:brand', getBrand)
   app.post('/products/brand/collective/brands', getBrands)
   app.get('/products/brandCounts/:category_type/:value', getBrandCounts)
