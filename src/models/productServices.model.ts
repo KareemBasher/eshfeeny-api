@@ -3,6 +3,7 @@ import Product from '../types/product.type'
 import { Db, ObjectId } from 'mongodb'
 import User from '../types/user.type'
 import OrderHistory from '../types/order.type'
+import Pharmacy from '../types/pharmacy.type'
 
 // Database connection variable
 let db: Db
@@ -143,6 +144,34 @@ class ProductServicesModel {
       }
     } catch (error) {
       throw new Error(`Unable to find products from favorites for user ${userId}, ${error}`)
+    }
+  }
+
+  // Get all favorite products for a pharmacy using their IDs
+  async getFavoriteProductsPharmacy(id: string): Promise<Product[]> {
+    // Getting all favorite products IDs
+    let pharmacy: Pharmacy
+
+    try {
+      pharmacy = (await db
+        .collection('pharmacies')
+        .findOne({ _id: new ObjectId(id) })) as unknown as Pharmacy
+    } catch (error) {
+      throw new Error(`Unable to find product ids from favorites for pharmacy ${id}, ${error}`)
+    }
+
+    try {
+      if (pharmacy.favorites) {
+        const result = (await db
+          .collection('products')
+          .find({ _id: { $in: pharmacy?.favorites } })
+          .toArray()) as unknown as Product[]
+        return result
+      } else {
+        return []
+      }
+    } catch (error) {
+      throw new Error(`Unable to find products from favorites for user ${id}, ${error}`)
     }
   }
 

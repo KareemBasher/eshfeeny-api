@@ -51,6 +51,19 @@ const getFavoriteProducts = async (req: Request, res: Response) => {
   }
 }
 
+// Get all favorite products for a pharmacy using their IDs
+const getFavoriteProductsPharmacy = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getFavoriteProductsPharmacy(
+      req.params.pharmacyId as string
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Showing all products that have a certain active ingredient
 const getAlternative = async (req: Request, res: Response) => {
   try {
@@ -129,6 +142,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/search/:query', search)
   app.get('/products/user/:userId/orderHistory/:orderHistoryId', getOrderHistoryProducts)
   app.get('/products/user/:userId/favorites', getFavoriteProducts)
+  app.get('/products/pharmacy/:pharmacyId/favorites', getFavoriteProductsPharmacy)
   app.get('/products/alternatives/:activeIngredient', getAlternative)
   app.get('/products/type/:type', getType)
   app.get('/products/user/:userId/cart/:productId', checkCart)
