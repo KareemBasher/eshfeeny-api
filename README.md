@@ -81,6 +81,7 @@ npm start
 | GET  | `/products/type/:type` | Get all products from a certain type | none | type |
 | GET  | `/products/user/:userId/cart/:productId` | Check if an item is in the user's cart | none | user ID, product ID |
 | GET | `/products/brandCounts/:category_type/:value`  | Get all brands in a category or type and their product counts | none | category or type, value of the category or type |
+| GET  | `/products/pharmacy/:pharmacyId` | Get all pharmacy products | none | pharmacy ID |
 
 ### Dashboard Routes
 
