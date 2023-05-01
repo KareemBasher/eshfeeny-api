@@ -136,6 +136,17 @@ const getBrandCounts = async (req: Request, res: Response) => {
   }
 }
 
+// Get pharmacy products
+const getPharmacyProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getPharmacyProducts(req.params.pharmacyId as string)
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -149,6 +160,7 @@ const productServices_routes = (app: Application) => {
   app.get('/products/brand/:brand', getBrand)
   app.post('/products/brand/collective/brands', getBrands)
   app.get('/products/brandCounts/:category_type/:value', getBrandCounts)
+  app.get('/products/pharmacy/:pharmacyId', getPharmacyProducts)
 }
 
 export default productServices_routes

@@ -171,7 +171,7 @@ class ProductServicesModel {
         return []
       }
     } catch (error) {
-      throw new Error(`Unable to find products from favorites for user ${id}, ${error}`)
+      throw new Error(`Unable to find products from favorites for pharmacy ${id}, ${error}`)
     }
   }
 
@@ -289,6 +289,42 @@ class ProductServicesModel {
       return result
     } catch (error) {
       throw new Error(`Unable to find brands from ${category_type}, ${error}`)
+    }
+  }
+
+  // Get pharmacy products
+  async getPharmacyProducts(id: string): Promise<Product[]> {
+    // Getting all favorite products IDs
+    let pharmacy: Pharmacy
+
+    try {
+      pharmacy = (await db
+        .collection('pharmacies')
+        .findOne({ _id: new ObjectId(id) })) as unknown as Pharmacy
+    } catch (error) {
+      throw new Error(`Unable to find product ids from ${id}, ${error}`)
+    }
+
+    try {
+      const ids: ObjectId[] = []
+
+      if (pharmacy.products) {
+        pharmacy.products?.forEach((item) => {
+          ids.push(new ObjectId(item._id))
+        })
+      }
+
+      if (ids.length > 0) {
+        const result = (await db
+          .collection('products')
+          .find({ _id: { $in: ids } })
+          .toArray()) as unknown as Product[]
+        return result
+      } else {
+        return []
+      }
+    } catch (error) {
+      throw new Error(`Unable to find products from pharmacy ${id}, ${error}`)
     }
   }
 }
