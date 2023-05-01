@@ -168,6 +168,22 @@ const decrementCartItem = async (req: Request, res: Response) => {
   }
 }
 
+// Add a product to a pharmacy
+const addProduct = async (req: Request, res: Response) => {
+  try {
+    const product = {
+      _id: req.body.id,
+      quantity: parseInt(req.body.quantity) as unknown as number
+    }
+
+    const result = await pharmacyServicesModel.addProduct(req.params.id as string, product)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
@@ -181,6 +197,7 @@ const pharmacyServices_routes = (app: Application) => {
   app.delete('/pharmacies/:id/cart/:productId', removeCartItem)
   app.patch('/pharmacies/:id/cart/:productId/1', incrementCartItem)
   app.patch('/pharmacies/:id/cart/:productId/-1', decrementCartItem)
+  app.patch('/pharmacies/:id/addProduct', addProduct)
 }
 
 export default pharmacyServices_routes

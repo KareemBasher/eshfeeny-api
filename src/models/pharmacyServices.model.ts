@@ -260,6 +260,24 @@ class PharmacyServices {
       throw new Error(`Could not remove favorite product for pharmacy with id ${id} ${error}`)
     }
   }
+
+  // Add a product to a pharmacy
+  async addProduct(id: string, product: { _id: ObjectId; quantity: number }): Promise<Pharmacy> {
+    try {
+      const result = (await db.collection('pharmacies').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            products: product
+          }
+        }
+      )) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not add product to pharmacy with id ${id} ${error}`)
+    }
+  }
 }
 
 export default PharmacyServices
