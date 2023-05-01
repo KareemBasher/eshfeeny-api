@@ -76,6 +76,7 @@ npm start
 | GET  | `/products/search/:query` | Search for a product using a query (has autocomplete) | none | query |
 | GET  | `/products/user/:userId/orderHistory/:orderHistoryId` | Get all products from a user's order history | none | user ID, order ID |
 | GET  | `/products/user/:userId/favorites` | Get all user favorite products | none | user ID |
+| GET  | `/products/pharmacies/:pharmacyId/favorites` | Get all pharmacy favorite products | none | pharmacy ID |
 | GET  | `/products/alternatives/:id` | Get all alternatives to a certain product | none | id |
 | GET  | `/products/type/:type` | Get all products from a certain type | none | type |
 | GET  | `/products/user/:userId/cart/:productId` | Check if an item is in the user's cart | none | user ID, product ID |
