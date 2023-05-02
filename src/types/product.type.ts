@@ -17,6 +17,7 @@ type Product = {
   warning: string[] | null
   brand: string | null
   images: string[]
+  manufacturer: string
 }
 
 export default Product

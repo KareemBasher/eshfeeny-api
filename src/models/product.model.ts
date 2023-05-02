@@ -68,7 +68,8 @@ class ProductModel {
             category: product.category,
             usage: product.usage,
             warning: product.warning,
-            brand: product.brand
+            brand: product.brand,
+            manufacturer: product.manufacturer
           }
         }
       )) as unknown as Product

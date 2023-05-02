@@ -55,7 +55,8 @@ const update = async (req: Request, res: Response) => {
     usage: req.body.usage,
     warning: req.body.warning,
     brand: req.body.brand,
-    images: req.body.images
+    images: req.body.images,
+    manufacturer: req.body.manufacturer
   }
 
   try {
