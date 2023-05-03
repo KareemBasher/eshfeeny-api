@@ -122,6 +122,7 @@ company id |
 | PATCH | `/pharmacies/:id/cart/:productId/1`  | Increment a cart item | none | pharmacy ID, product ID |
 | PATCH | `/pharmacies/:id/cart/:productId/-1`  | Decrement a cart item | none | pharmacy ID, product ID | |
 | PATCH  | `/pharmacies/:id/addProduct` | Add a product to inventory | `id`, `quantity` | pharmacy ID |
+| GET  | `/pharmacies/:id/cart/total` | Gets the total price for items in cart | none | pharmacy ID |
 
 ## Requirements
 
