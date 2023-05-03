@@ -1,5 +1,6 @@
 import { Application, Request, Response } from 'express'
 import PharmacyServicesModel from '../models/pharmacyServices.model'
+import { ObjectId } from 'mongodb'
 
 // Instantiate PharmacyServicesModel class
 const pharmacyServicesModel = new PharmacyServicesModel()
@@ -172,7 +173,7 @@ const decrementCartItem = async (req: Request, res: Response) => {
 const addProduct = async (req: Request, res: Response) => {
   try {
     const product = {
-      _id: req.body.id,
+      _id: new ObjectId(req.body.id),
       quantity: parseInt(req.body.quantity) as unknown as number
     }
 
