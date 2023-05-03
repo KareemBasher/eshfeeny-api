@@ -184,6 +184,17 @@ const addProduct = async (req: Request, res: Response) => {
   }
 }
 
+// Get cart total price
+const getCartTotal = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.getCartTotal(req.params.id as string)
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
@@ -198,6 +209,7 @@ const pharmacyServices_routes = (app: Application) => {
   app.patch('/pharmacies/:id/cart/:productId/1', incrementCartItem)
   app.patch('/pharmacies/:id/cart/:productId/-1', decrementCartItem)
   app.patch('/pharmacies/:id/addProduct', addProduct)
+  app.get('/pharmacies/:id/cart/total', getCartTotal)
 }
 
 export default pharmacyServices_routes

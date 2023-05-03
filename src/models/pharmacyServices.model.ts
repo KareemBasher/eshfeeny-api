@@ -161,8 +161,48 @@ class PharmacyServices {
       const result = (
         await db
           .collection('pharmacies')
-          .find({ _id: new ObjectId(id) })
-          .project({ cart: 1, _id: 0 })
+          .aggregate([
+            {
+              $match: {
+                _id: new ObjectId(id)
+              }
+            },
+            {
+              $unwind: '$cart'
+            },
+            {
+              $group: {
+                _id: {
+                  product: '$cart.product',
+                  quantity: '$cart.quantity'
+                },
+                total: {
+                  $sum: {
+                    $multiply: ['$cart.quantity', '$cart.product.price']
+                  }
+                }
+              }
+            },
+            {
+              $group: {
+                _id: null,
+                cart: {
+                  $push: {
+                    product: '$_id.product',
+                    quantity: '$_id.quantity'
+                  }
+                },
+                total: {
+                  $sum: '$total'
+                }
+              }
+            },
+            {
+              $project: {
+                _id: 0
+              }
+            }
+          ])
           .toArray()
       )[0] as unknown as Pharmacy[]
 
@@ -276,6 +316,37 @@ class PharmacyServices {
       return result
     } catch (error) {
       throw new Error(`Could not add product to pharmacy with id ${id} ${error}`)
+    }
+  }
+
+  // Get cart total price
+  async getCartTotal(id: string): Promise<Pharmacy> {
+    try {
+      const result = (
+        await db
+          .collection('pharmacies')
+          .aggregate([
+            { $match: { _id: new ObjectId(id) } },
+            { $unwind: '$cart' },
+            {
+              $group: {
+                _id: '0',
+                total: { $sum: { $multiply: ['$cart.quantity', '$cart.product.price'] } }
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                total: 1
+              }
+            }
+          ])
+          .toArray()
+      )[0] as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not get cart total for pharmacy with id ${id} ${error}`)
     }
   }
 }
