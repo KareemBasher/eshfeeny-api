@@ -319,35 +319,44 @@ class ProductServicesModel {
 
   // Get pharmacy products
   async getPharmacyProducts(id: string): Promise<Product[]> {
-    // Getting all favorite products IDs
-    let pharmacy: Pharmacy
-
     try {
-      pharmacy = (await db
-        .collection('pharmacies')
-        .findOne({ _id: new ObjectId(id) })) as unknown as Pharmacy
-    } catch (error) {
-      throw new Error(`Unable to find product ids from ${id}, ${error}`)
-    }
+      const result = (
+        await db
+          .collection('pharmacies')
+          .aggregate([
+            {
+              $match: {
+                _id: new ObjectId(id)
+              }
+            },
+            {
+              $unwind: '$products'
+            },
+            {
+              $lookup: {
+                from: 'products',
+                localField: 'products._id',
+                foreignField: '_id',
+                as: 'product'
+              }
+            },
+            {
+              $addFields: {
+                products: { $mergeObjects: [{ $arrayElemAt: ['$product', 0] }, '$products'] }
+              }
+            },
+            {
+              $group: {
+                _id: '$_id',
+                products: { $push: '$products' }
+              }
+            },
+            { $project: { _id: 0 } }
+          ])
+          .toArray()
+      )[0].products as unknown as Product[]
 
-    try {
-      const ids: ObjectId[] = []
-
-      if (pharmacy.products) {
-        pharmacy.products?.forEach((item) => {
-          ids.push(new ObjectId(item._id))
-        })
-      }
-
-      if (ids.length > 0) {
-        const result = (await db
-          .collection('products')
-          .find({ _id: { $in: ids } })
-          .toArray()) as unknown as Product[]
-        return result
-      } else {
-        return []
-      }
+      return result
     } catch (error) {
       throw new Error(`Unable to find products from pharmacy ${id}, ${error}`)
     }
