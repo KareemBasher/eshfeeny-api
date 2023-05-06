@@ -83,6 +83,8 @@ npm start
  GET  | `/products/pharmacy/:pharmacyId/cart/:productId` | Check if an item is in the pharmacy's cart | none | pharmacy ID, product ID |
 | GET | `/products/brandCounts/:category_type/:value`  | Get all brands in a category or type and their product counts | none | category or type, value of the category or type |
 | GET  | `/products/pharmacy/:pharmacyId` | Get all pharmacy products | none | pharmacy ID |
+| GET  | `/products/pharmacy/:pharmacyId/type/:type` | Get pharmacy products from a certain type | none | pharmacy ID |
+| GET  | `/products/pharmacy/:pharmacyId/category/:category` | Get pharmacy products from a certain category | none | pharmacy ID |
 
 ### Dashboard Routes
 
