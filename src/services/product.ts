@@ -161,6 +161,36 @@ const getPharmacyProducts = async (req: Request, res: Response) => {
   }
 }
 
+// Get pharmacy products by type
+const getPharmacyProductsByType = async (req: Request, res: Response) => {
+  try {
+    console.log(req.params.pharmacyId, req.params.type)
+    const products = await productServicesModel.getPharmacyProductsType(
+      req.params.pharmacyId as string,
+      req.params.type as string
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Get pharmacy products by category
+const getPharmacyProductsByCategory = async (req: Request, res: Response) => {
+  try {
+    console.log(req.params.pharmacyId, req.params.type)
+    const products = await productServicesModel.getPharmacyProductsCategory(
+      req.params.pharmacyId as string,
+      req.params.category as string
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -176,6 +206,8 @@ const productServices_routes = (app: Application) => {
   app.post('/products/brand/collective/brands', getBrands)
   app.get('/products/brandCounts/:category_type/:value', getBrandCounts)
   app.get('/products/pharmacy/:pharmacyId', getPharmacyProducts)
+  app.get('/products/pharmacy/:pharmacyId/type/:type', getPharmacyProductsByType)
+  app.get('/products/pharmacy/:pharmacyId/category/:category', getPharmacyProductsByCategory)
 }
 
 export default productServices_routes
