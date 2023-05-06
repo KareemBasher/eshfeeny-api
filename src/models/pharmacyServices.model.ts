@@ -92,9 +92,11 @@ class PharmacyServices {
   // Get pharmacies that have a list of products
   async getPharmacies(products: string[]): Promise<Pharmacy[]> {
     try {
+      const Ids = products.map((product) => new ObjectId(product))
+
       const result = (await db
         .collection('pharmacies')
-        .find({ 'products._id': { $all: products } })
+        .find({ 'products._id': { $all: Ids } })
         .project({ password: 0, products: 0 })
         .toArray()) as unknown as Pharmacy[]
 
