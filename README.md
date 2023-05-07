@@ -84,7 +84,7 @@ npm start
 | GET | `/products/brandCounts/:category_type/:value`  | Get all brands in a category or type and their product counts | none | category or type, value of the category or type |
 | GET  | `/products/pharmacy/:pharmacyId` | Get all pharmacy products | none | pharmacy ID |
 | GET  | `/products/pharmacy/:pharmacyId/type/:type` | Get pharmacy products from a certain type | none | pharmacy ID |
-| GET  | `/products/pharmacy/:pharmacyId/category/:category` | Get pharmacy products from a certain category | none | pharmacy ID |
+| PATCH  | `/products/pharmacy/:pharmacyId/category/` | Get pharmacy products from certain categories | `categories` (string array) | pharmacy ID |
 
 ### Dashboard Routes
 
