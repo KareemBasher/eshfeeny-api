@@ -411,7 +411,7 @@ class ProductServicesModel {
   }
 
   // Get pharmacy products from certain type
-  async getPharmacyProductsCategory(id: string, category: string): Promise<Product[]> {
+  async getPharmacyProductsCategory(id: string, categories: string[]): Promise<Product[]> {
     try {
       const result = await db
         .collection('pharmacies')
@@ -437,7 +437,7 @@ class ProductServicesModel {
               products: { $mergeObjects: [{ $arrayElemAt: ['$product', 0] }, '$products'] }
             }
           },
-          { $match: { 'products.category': category } },
+          { $match: { 'products.category': { $in: categories } } },
           {
             $group: {
               _id: '$_id',
