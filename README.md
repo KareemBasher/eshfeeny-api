@@ -98,7 +98,7 @@ npm start
 | Route  | Path | Description | Body | Params |
 | ------ | ---- | ----------- | ---- | ------ |
 | GET  | `/insuranceCompanies` | Get all insurance companies | none | none |
-| GET  | `/insuranceCompanies` | Get a certain insurance company using its ID | `imageURL` | insurance
+| GET  | `/insuranceCompanies/:id` | Get a certain insurance company using its ID | none | insurance
 company id |
 
 ### Pharmacy Routes
