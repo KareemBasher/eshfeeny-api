@@ -351,6 +351,21 @@ class PharmacyServices {
       throw new Error(`Could not get cart total for pharmacy with id ${id} ${error}`)
     }
   }
+
+  // Check if a pharmacy already has a certain product
+  async checkProduct(id: string, productId: string): Promise<boolean> {
+    try {
+      const result = (await db.collection('pharmacies').findOne({
+        _id: new ObjectId(id),
+        'products._id': new ObjectId(productId)
+      })) as unknown as Pharmacy
+
+      if (result) return true
+      else return false
+    } catch (error) {
+      throw new Error(`Could not check product for pharmacy with id ${id} ${error}`)
+    }
+  }
 }
 
 export default PharmacyServices
