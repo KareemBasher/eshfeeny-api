@@ -366,6 +366,43 @@ class PharmacyServices {
       throw new Error(`Could not check product for pharmacy with id ${id} ${error}`)
     }
   }
+
+  // Send order to manufacturer
+  async sendOrder(
+    id: string,
+    manufacturerName: string,
+    product: Product,
+    quantity: number
+  ): Promise<Pharmacy> {
+    try {
+      const date = new Date()
+      const dd = String(date.getDate()).padStart(2, '0')
+      const mm = String(date.getMonth() + 1).padStart(2, '0')
+      const yyyy = date.getFullYear()
+      const today = dd + '/' + mm + '/' + yyyy
+
+      const result = db.collection('manufacturers').updateOne(
+        { name: manufacturerName },
+        {
+          $push: {
+            orders: {
+              _id: new ObjectId(),
+              pharmacyId: new ObjectId(id),
+              product: product._id,
+              quantity: quantity,
+              createdOn: today
+            }
+          }
+        }
+      ) as unknown as Pharmacy
+
+      return result
+    } catch (error) {
+      throw new Error(
+        `Could not send order to manufacturer with the name ${manufacturerName} ${error}`
+      )
+    }
+  }
 }
 
 export default PharmacyServices

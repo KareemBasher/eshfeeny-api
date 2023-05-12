@@ -210,6 +210,21 @@ const checkProduct = async (req: Request, res: Response) => {
   }
 }
 
+const sendOrder = async (req: Request, res: Response) => {
+  try {
+    const result = await pharmacyServicesModel.sendOrder(
+      req.params.id as string,
+      req.params.manufacturerName as string,
+      req.body.product,
+      req.body.quantity
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const pharmacyServices_routes = (app: Application) => {
   app.post('/pharmacies/verify', verify)
   app.patch('/pharmacies/:id/profile', updateProfile)
@@ -226,6 +241,7 @@ const pharmacyServices_routes = (app: Application) => {
   app.patch('/pharmacies/:id/addProduct', addProduct)
   app.get('/pharmacies/:id/cart/total', getCartTotal)
   app.get('/pharmacies/:id/checkProduct/:productId', checkProduct)
+  app.post('/pharmacies/:id/sendOrder/manufacturer/:manufacturerName', sendOrder)
 }
 
 export default pharmacyServices_routes
