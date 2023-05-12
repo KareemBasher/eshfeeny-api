@@ -129,6 +129,7 @@ company id |
 | PATCH  | `/pharmacies/:id/addProduct` | Add a product to inventory | `id`, `quantity` | pharmacy ID |
 | GET  | `/pharmacies/:id/cart/total` | Gets the total price for items in cart | none | pharmacy ID |
 | GET  | `/pharmacies/:id/checkProduct/:productId` | Checks if a pharmacy already has a certain product | none | pharmacy ID, product ID |
+| POST | `/pharmacies/:id/sendOrder/manufacturer/:manufacturerName`  | Send order to manufacturer | `product`, `quantity` | pharmacy ID, manufacturer ID |
 
 ### Manufacturer Routes
 
