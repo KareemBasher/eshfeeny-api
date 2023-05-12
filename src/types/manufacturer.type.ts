@@ -5,7 +5,7 @@ interface Order {
   pharmacyId: ObjectId
   product: ObjectId
   quantity: number
-  createdOn: Date
+  createdOn: string
 }
 
 type Manufacturer = {
