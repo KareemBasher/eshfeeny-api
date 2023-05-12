@@ -127,6 +127,17 @@ company id |
 | GET  | `/pharmacies/:id/cart/total` | Gets the total price for items in cart | none | pharmacy ID |
 | GET  | `/pharmacies/:id/checkProduct/:productId` | Checks if a pharmacy already has a certain product | none | pharmacy ID, product ID |
 
+### Manufacturer Routes
+
+| Route  | Path | Description | Body | Params |
+| ------ | ---- | ----------- | ---- | ------ |
+| GET  | `/manufacturers/` | List all manufacturers | none | none |
+| GET | `/manufacturers/:id`  | Get a specific manufacturer using an ID | none | manufacturer ID |
+| POST | `/manufacturers/checkEmail`  | Get a specific manufacturer using their email | `email` | none |
+| POST | `/manufacturers/`  | Create a new manufacturer | `name`, `password`, `email` | none |
+| PATCH | `/manufacturers/:id`  | Edit a manufacturer | `name`, `password`, `email` | manufacturer ID |
+| DELETE | `/manufacturers/:id`  | Remove a manufacturer | none | manufacturer ID |
+
 ## Requirements
 
 An environment file is required to run the project.\
