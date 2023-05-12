@@ -11,6 +11,7 @@ import dashboard_routes from './services/dashboard'
 import insuranceCompanies_routes from './handlers/insuranceCompany'
 import pharmacyRoutes from './handlers/pharmacy'
 import pharmacyServices_routes from './services/pharmacy'
+import manufacturerRoutes from './handlers/manufacturer'
 
 const PORT = config.port
 // create an instance server
@@ -37,5 +38,6 @@ dashboard_routes(app)
 insuranceCompanies_routes(app)
 pharmacyRoutes(app)
 pharmacyServices_routes(app)
+manufacturerRoutes(app)
 
 export default app
