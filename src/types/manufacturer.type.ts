@@ -16,6 +16,7 @@ type Manufacturer = {
   orders?: Order[]
   delayedOrders?: Order[]
   phoneNumber?: string
+  address?: string
 }
 
 export default Manufacturer
