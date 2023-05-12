@@ -61,7 +61,8 @@ class ManufacturerModel {
       password: hashPassowrd(manufacturer.password),
       email: manufacturer.email.toLowerCase(),
       orders: [],
-      delayedOrders: []
+      delayedOrders: [],
+      products: []
     }
 
     try {

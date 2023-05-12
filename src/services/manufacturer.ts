@@ -10,7 +10,7 @@ const verify = async (req: Request, res: Response) => {
   try {
     const result = await manufacturerServicesModel.verifyLogin(
       req.body.password as string,
-      req.body.email
+      req.body.email as string
     )
 
     res.json(result)
@@ -104,7 +104,7 @@ const getDelayedOrders = async (req: Request, res: Response) => {
   }
 }
 
-const manufacturerRoutes = (app: Application) => {
+const manufacturerServices_routes = (app: Application) => {
   app.post('/manufacturers/verify', verify)
   app.patch('/manufacturers/:id/profile', updateProfile)
   app.patch('/manufacturers/:id/password', updatePassword)
@@ -114,4 +114,4 @@ const manufacturerRoutes = (app: Application) => {
   app.get('/manufacturers/:id/delayedOrders', getDelayedOrders)
 }
 
-export default manufacturerRoutes
+export default manufacturerServices_routes
