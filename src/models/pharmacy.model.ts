@@ -65,7 +65,9 @@ class PharmacyModel {
     }
 
     try {
-      const oldUser = await db.collection('users').findOne({ email: pharmacy.email.toLowerCase() })
+      const oldUser = await db
+        .collection('pharmacies')
+        .findOne({ email: pharmacy.email.toLowerCase() })
 
       if (oldUser) {
         return 'User already exists'
