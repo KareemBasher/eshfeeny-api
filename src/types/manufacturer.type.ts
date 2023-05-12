@@ -13,6 +13,7 @@ type Manufacturer = {
   name: string
   email: string
   password: string
+  products: { _id: ObjectId; quantity: number }[]
   orders?: Order[]
   delayedOrders?: Order[]
   phoneNumber?: string
