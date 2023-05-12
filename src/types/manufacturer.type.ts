@@ -13,8 +13,8 @@ type Manufacturer = {
   name: string
   email: string
   password: string
-  orders: Order[]
-  delayedOrders: Order[]
+  orders?: Order[]
+  delayedOrders?: Order[]
 }
 
 export default Manufacturer
