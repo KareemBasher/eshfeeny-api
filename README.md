@@ -85,6 +85,9 @@ npm start
 | GET  | `/products/pharmacy/:pharmacyId` | Get all pharmacy products | none | pharmacy ID |
 | GET  | `/products/pharmacy/:pharmacyId/type/:type` | Get pharmacy products from a certain type | none | pharmacy ID |
 | PATCH  | `/products/pharmacy/:pharmacyId/category/` | Get pharmacy products from certain categories | `categories` (string array) | pharmacy ID |
+| GET  | `/products/manufacturer/:manufacturerId` | Get all manufacturer products | none | manufacturer ID |
+| GET  | `/products/manufacturer/:manufacturerId/type/:type` | Get manufacturer products from a certain type | none | manufacturer ID |
+| PATCH  | `/products/manufacturer/:manufacturerId/category/` | Get manufacturer products from certain categories | `categories` (string array) | manufacturer ID |
 
 ### Dashboard Routes
 
