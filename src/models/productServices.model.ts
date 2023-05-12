@@ -457,6 +457,147 @@ class ProductServicesModel {
       throw new Error(`Unable to find products from pharmacy ${id}, ${error}`)
     }
   }
+
+  // Get manufacturer products
+  async getManufacturerProducts(id: string): Promise<Product[]> {
+    try {
+      const result = (
+        await db
+          .collection('manufacturers')
+          .aggregate([
+            {
+              $match: {
+                _id: new ObjectId(id)
+              }
+            },
+            {
+              $unwind: '$products'
+            },
+            {
+              $lookup: {
+                from: 'products',
+                localField: 'products._id',
+                foreignField: '_id',
+                as: 'product'
+              }
+            },
+            {
+              $addFields: {
+                products: { $mergeObjects: [{ $arrayElemAt: ['$product', 0] }, '$products'] }
+              }
+            },
+            {
+              $group: {
+                _id: '$_id',
+                products: { $push: '$products' }
+              }
+            },
+            { $project: { _id: 0 } }
+          ])
+          .toArray()
+      )[0].products as unknown as Product[]
+
+      return result
+    } catch (error) {
+      throw new Error(`Unable to find products from manufacturer ${id}, ${error}`)
+    }
+  }
+
+  // Get manufacturer products from certain type
+  async getManufacturerProductsType(id: string, type: string): Promise<Product[]> {
+    try {
+      const result = await db
+        .collection('manufacturers')
+        .aggregate([
+          {
+            $match: {
+              _id: new ObjectId(id)
+            }
+          },
+          {
+            $unwind: '$products'
+          },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'products._id',
+              foreignField: '_id',
+              as: 'product'
+            }
+          },
+          {
+            $addFields: {
+              products: { $mergeObjects: [{ $arrayElemAt: ['$product', 0] }, '$products'] }
+            }
+          },
+          { $match: { 'products.type': type } },
+          {
+            $group: {
+              _id: '$_id',
+              products: { $push: '$products' }
+            }
+          },
+          { $project: { _id: 0 } }
+        ])
+        .toArray()
+
+      if (result.length > 0) {
+        return result[0].products as unknown as Product[]
+      } else {
+        return []
+      }
+    } catch (error) {
+      throw new Error(`Unable to find products from manufacturer ${id}, ${error}`)
+    }
+  }
+
+  // Get manufacturer products from certain type
+  async getManufacturerProductsCategory(id: string, categories: string[]): Promise<Product[]> {
+    try {
+      const result = await db
+        .collection('manufacturers')
+        .aggregate([
+          {
+            $match: {
+              _id: new ObjectId(id)
+            }
+          },
+          {
+            $unwind: '$products'
+          },
+          {
+            $lookup: {
+              from: 'products',
+              localField: 'products._id',
+              foreignField: '_id',
+              as: 'product'
+            }
+          },
+          {
+            $addFields: {
+              products: { $mergeObjects: [{ $arrayElemAt: ['$product', 0] }, '$products'] }
+            }
+          },
+          { $match: { 'products.category': { $in: categories } } },
+          {
+            $group: {
+              _id: '$_id',
+              products: { $push: '$products' }
+            }
+          },
+          { $project: { _id: 0 } }
+        ])
+        .toArray()
+
+      if (result.length > 0) {
+        return result[0].products as unknown as Product[]
+      } else {
+        return []
+      }
+    } catch (error) {
+      throw new Error(`Unable to find products from manufacturer ${id}, ${error}`)
+    }
+  }
 }
 
 export default ProductServicesModel

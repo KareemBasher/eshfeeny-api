@@ -190,6 +190,48 @@ const getPharmacyProductsByCategory = async (req: Request, res: Response) => {
   }
 }
 
+// Get manufacturer products
+const getManufacturerProducts = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getManufacturerProducts(
+      req.params.pharmacyId as string
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Get manufacturer products by type
+const getManufacturerProductsByType = async (req: Request, res: Response) => {
+  try {
+    console.log(req.params.pharmacyId, req.params.type)
+    const products = await productServicesModel.getManufacturerProductsType(
+      req.params.pharmacyId as string,
+      req.params.type as string
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Get manufacturer products by category
+const getManufacturerProductsByCategory = async (req: Request, res: Response) => {
+  try {
+    const products = await productServicesModel.getManufacturerProductsCategory(
+      req.params.pharmacyId as string,
+      req.body.categories as string[]
+    )
+    res.json(products)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 // Product services routes
 const productServices_routes = (app: Application) => {
   app.get('/products/category/:category', getCategory)
@@ -207,6 +249,9 @@ const productServices_routes = (app: Application) => {
   app.get('/products/pharmacy/:pharmacyId', getPharmacyProducts)
   app.get('/products/pharmacy/:pharmacyId/type/:type', getPharmacyProductsByType)
   app.patch('/products/pharmacy/:pharmacyId/category', getPharmacyProductsByCategory)
+  app.get('/products/manufacturer/:manufacturerId', getManufacturerProducts)
+  app.get('/products/manufacturer/:manufacturerId/type/:type', getManufacturerProductsByType)
+  app.patch('/products/manufacturer/:manufacturerId/category', getManufacturerProductsByCategory)
 }
 
 export default productServices_routes
