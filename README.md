@@ -140,6 +140,13 @@ company id |
 | POST | `/manufacturers/`  | Create a new manufacturer | `name`, `password`, `email` | none |
 | PATCH | `/manufacturers/:id`  | Edit a manufacturer | `name`, `password`, `email` | manufacturer ID |
 | DELETE | `/manufacturers/:id`  | Remove a manufacturer | none | manufacturer ID |
+| POST | `/manufacturers/verify`  | Verify manufacturer's data for login | `email`, `password` | none |
+| PATCH | `/manufacturers/:id/profile`  | Update manufacturer's profile data | `email`, `name`, `phoneNumber`, `address` | none |
+| PATCH | `/manufacturers/:id/password`  | Update manufacturer's password | `email`, `password` | none |
+| PATCH  | `/manufacturers/:id/addProduct` | Add a product to inventory | `id`, `quantity` | manufacturer ID |
+| GET  | `/manufacturers/:id/checkProduct/:productId` | Checks if a manufacturer already has a certain product | none | manufacturer ID, product ID |
+| GET  | `/manufacturers/:id/orders` | List all manufacturers orders | none | manufacturer ID |
+| GET  | `/manufacturers/:id/delayedOrders` | List all manufacturers delayed orders | none | manufacturer ID |
 
 ## Requirements
 
