@@ -1,6 +1,6 @@
-# Eshfeeny Graduation Project API
-
-This is the back-end for the graduation project Eshfeeny
+# ~Eshfeeny~ MedFinder
+### Senior Year Graduation project for The Faculty of Computers and Informatics, Suez Canal University
+This project uses NodeJs, Express, Typescript, MongoDB to serve the back-end for the graduation project ~Eshfeeny~ MedFinder (previously named Eshfeeny).
 
 ## Installation
 
