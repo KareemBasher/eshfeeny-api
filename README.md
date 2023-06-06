@@ -163,4 +163,3 @@ a `.env` file that includes:
 * `SENDGRID_TEMPLATE_ID` SendGrid email template ID.
 * `MS_AZURE_CV_KEY` Microsoft Azure Computer Vision API key for image search.
 * `MS_AZURE_CV_URL` Microsoft Azure Computer Vision API endpoint for image search.
-
