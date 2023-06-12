@@ -63,6 +63,10 @@ class PharmacyModel {
       cart: [],
       favorites: []
     }
+    interface CreateRespone {
+      acknowledged: boolean
+      insertedId: ObjectId
+    }
 
     try {
       const oldUser = await db
@@ -73,9 +77,18 @@ class PharmacyModel {
         return 'User already exists'
       }
 
-      const newPharmacy = (await db
+      const result = (await db
         .collection('pharmacies')
-        .insertOne(passwordHashedObj)) as unknown as Pharmacy
+        .insertOne(passwordHashedObj)) as unknown as CreateRespone
+
+      const newPharmacy = (
+        await db
+          .collection('pharmacies')
+          .find({ _id: new ObjectId(result.insertedId) })
+          .project({ password: 0 })
+          .toArray()
+      )[0] as unknown as Pharmacy
+
       return newPharmacy
     } catch (error) {
       console.log(`Failed to create pharmacy, ${error}`)

@@ -65,6 +65,11 @@ class ManufacturerModel {
       products: []
     }
 
+    interface CreateRespone {
+      acknowledged: boolean
+      insertedId: ObjectId
+    }
+
     try {
       const oldUser = await db
         .collection('manufacturers')
@@ -74,9 +79,18 @@ class ManufacturerModel {
         return 'manufacturer already exists'
       }
 
-      const newManufacturer = (await db
+      const result = (await db
         .collection('manufacturers')
-        .insertOne(passwordHashedObj)) as unknown as Manufacturer
+        .insertOne(passwordHashedObj)) as unknown as CreateRespone
+
+      const newManufacturer = (
+        await db
+          .collection('manufacturers')
+          .find({ _id: new ObjectId(result.insertedId) })
+          .project({ password: 0 })
+          .toArray()
+      )[0] as unknown as Manufacturer
+
       return newManufacturer
     } catch (error) {
       console.log(`Failed to create manufacturer, ${error}`)
