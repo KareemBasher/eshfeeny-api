@@ -194,7 +194,7 @@ const getPharmacyProductsByCategory = async (req: Request, res: Response) => {
 const getManufacturerProducts = async (req: Request, res: Response) => {
   try {
     const products = await productServicesModel.getManufacturerProducts(
-      req.params.pharmacyId as string
+      req.params.manufacturerId as string
     )
     res.json(products)
   } catch (error) {
@@ -206,9 +206,8 @@ const getManufacturerProducts = async (req: Request, res: Response) => {
 // Get manufacturer products by type
 const getManufacturerProductsByType = async (req: Request, res: Response) => {
   try {
-    console.log(req.params.pharmacyId, req.params.type)
     const products = await productServicesModel.getManufacturerProductsType(
-      req.params.pharmacyId as string,
+      req.params.manufacturerId as string,
       req.params.type as string
     )
     res.json(products)
@@ -222,7 +221,7 @@ const getManufacturerProductsByType = async (req: Request, res: Response) => {
 const getManufacturerProductsByCategory = async (req: Request, res: Response) => {
   try {
     const products = await productServicesModel.getManufacturerProductsCategory(
-      req.params.pharmacyId as string,
+      req.params.manufacturerId as string,
       req.body.categories as string[]
     )
     res.json(products)
