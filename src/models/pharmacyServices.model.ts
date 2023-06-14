@@ -388,7 +388,7 @@ class PharmacyServices {
             orders: {
               _id: new ObjectId(),
               pharmacyId: new ObjectId(id),
-              product: product._id,
+              product: new ObjectId(product._id),
               quantity: quantity,
               createdOn: today
             }
