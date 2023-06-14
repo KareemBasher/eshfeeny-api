@@ -141,7 +141,7 @@ class ManufaturerServicesModel {
     }
   }
 
-  // get all delayed orders
+  // Get all delayed orders
   async getDelayedOrders(id: string): Promise<Manufacturer> {
     try {
       const result = (
@@ -155,6 +155,75 @@ class ManufaturerServicesModel {
       return result
     } catch (error) {
       throw new Error(`Could not get orders for manufacturer with id ${id} ${error}`)
+    }
+  }
+
+  // Transfer an order from the orders array to the delayedOrders array
+  async delayOrder(id: string, orderId: string): Promise<Manufacturer> {
+    try {
+      const result = (await db.collection('manufacturers').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $push: {
+            delayedOrders: {
+              $each: [
+                (
+                  await db
+                    .collection('manufacturers')
+                    .find({ _id: new ObjectId(id) })
+                    .project({ orders: { $elemMatch: { _id: new ObjectId(orderId) } }, _id: 0 })
+                    .toArray()
+                )[0].orders[0]
+              ]
+            }
+          },
+          $pull: {
+            orders: {
+              _id: new ObjectId(orderId)
+            }
+          }
+        }
+      )) as unknown as Manufacturer
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not delay order for manufacturer with id ${id} ${error}`)
+    }
+  }
+
+  // Transfer an order from the delayedOrders array to the orders array
+  async undelayOrder(id: string, orderId: string): Promise<Manufacturer> {
+    try {
+      const result = await db.collection('manufacturers').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            delayedOrders: {
+              _id: new ObjectId(orderId)
+            }
+          },
+          $push: {
+            orders: {
+              $each: [
+                (
+                  await db
+                    .collection('manufacturers')
+                    .find({ _id: new ObjectId(id) })
+                    .project({
+                      delayedOrders: { $elemMatch: { _id: new ObjectId(orderId) } },
+                      _id: 0
+                    })
+                    .toArray()
+                )[0].delayedOrders[0]
+              ]
+            }
+          }
+        }
+      )
+
+      return result as unknown as Manufacturer
+    } catch (error) {
+      throw new Error(`Could not undelay order for manufacturer with id ${id} ${error}`)
     }
   }
 }

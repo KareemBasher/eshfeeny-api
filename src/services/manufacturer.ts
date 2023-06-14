@@ -104,6 +104,34 @@ const getDelayedOrders = async (req: Request, res: Response) => {
   }
 }
 
+// Transfer an order from the orders array to the delayedOrders array
+const delayOrder = async (req: Request, res: Response) => {
+  try {
+    const result = await manufacturerServicesModel.delayOrder(
+      req.params.id as string,
+      req.params.orderId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
+// Transfer an order from the delayedOrders array to the orders array
+const undelayOrder = async (req: Request, res: Response) => {
+  try {
+    const result = await manufacturerServicesModel.undelayOrder(
+      req.params.id as string,
+      req.params.orderId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const manufacturerServices_routes = (app: Application) => {
   app.post('/manufacturers/verify', verify)
   app.patch('/manufacturers/:id/profile', updateProfile)
@@ -112,6 +140,8 @@ const manufacturerServices_routes = (app: Application) => {
   app.get('/manufacturers/:id/checkProduct/:productId', checkProduct)
   app.get('/manufacturers/:id/orders', getOrders)
   app.get('/manufacturers/:id/delayedOrders', getDelayedOrders)
+  app.patch('/manufacturers/:id/delayOrder/:orderId', delayOrder)
+  app.patch('/manufacturers/:id/undelayOrder/:orderId', undelayOrder)
 }
 
 export default manufacturerServices_routes
