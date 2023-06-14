@@ -148,6 +148,8 @@ company id |
 | GET  | `/manufacturers/:id/checkProduct/:productId` | Checks if a manufacturer already has a certain product | none | manufacturer ID, product ID |
 | GET  | `/manufacturers/:id/orders` | List all manufacturers orders | none | manufacturer ID |
 | GET  | `/manufacturers/:id/delayedOrders` | List all manufacturers delayed orders | none | manufacturer ID |
+| PATCH  | `/manufacturers/:id/delayOrder/:orderId` | Delay an order | none | manufacturer ID, orderID |
+| PATCH  | `/manufacturers/:id/undelayOrder/:orderId` | Remove an order from the delayed orders and back the orders | none | manufacturer ID, orderID |
 
 ## Requirements
 
