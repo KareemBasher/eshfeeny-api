@@ -132,6 +132,20 @@ const undelayOrder = async (req: Request, res: Response) => {
   }
 }
 
+// Remove an order from the orders array
+const removeOrder = async (req: Request, res: Response) => {
+  try {
+    const result = await manufacturerServicesModel.removeOrder(
+      req.params.id as string,
+      req.params.orderId as string
+    )
+    res.json(result)
+  } catch (error) {
+    res.status(500)
+    res.json(error)
+  }
+}
+
 const manufacturerServices_routes = (app: Application) => {
   app.post('/manufacturers/verify', verify)
   app.patch('/manufacturers/:id/profile', updateProfile)
@@ -142,6 +156,7 @@ const manufacturerServices_routes = (app: Application) => {
   app.get('/manufacturers/:id/delayedOrders', getDelayedOrders)
   app.patch('/manufacturers/:id/delayOrder/:orderId', delayOrder)
   app.patch('/manufacturers/:id/undelayOrder/:orderId', undelayOrder)
+  app.delete('/manufacturers/:id/removeOrder/:orderId', removeOrder)
 }
 
 export default manufacturerServices_routes

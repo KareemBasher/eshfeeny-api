@@ -226,6 +226,26 @@ class ManufaturerServicesModel {
       throw new Error(`Could not undelay order for manufacturer with id ${id} ${error}`)
     }
   }
+
+  // Remove an order from the orders array
+  async removeOrder(id: string, orderId: string): Promise<Manufacturer> {
+    try {
+      const result = (await db.collection('manufacturers').updateOne(
+        { _id: new ObjectId(id) },
+        {
+          $pull: {
+            orders: {
+              _id: new ObjectId(orderId)
+            }
+          }
+        }
+      )) as unknown as Manufacturer
+
+      return result
+    } catch (error) {
+      throw new Error(`Could not remove order for manufacturer with id ${id} ${error}`)
+    }
+  }
 }
 
 export default ManufaturerServicesModel
